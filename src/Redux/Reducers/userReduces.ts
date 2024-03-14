@@ -29,7 +29,7 @@ export const {
   reducers: {
     addUser(state, action: PayloadAction<User>) {
       const user = state.users.find((u) => u.id === action.payload.id);
-      if (user === undefined) {
+      if (!user) {
         state.users.push(action.payload);
       } else {
         alert("User with exist");
