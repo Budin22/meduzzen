@@ -8,12 +8,11 @@ export const AboutPage = memo(() => {
 
   return (
     <Container>
-      {isLoading && (
+      {isLoading ? (
         <Typography variant="h1" gutterBottom color="steelblue">
           Loading
         </Typography>
-      )}
-      {data ? (
+      ) : data ? (
         <Typography variant="h1" gutterBottom color="steelblue">
           detail: {data.detail}, result: {data.result}, status:
           {data.status_code}
