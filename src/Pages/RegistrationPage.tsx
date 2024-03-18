@@ -29,7 +29,10 @@ export const RegistrationPage = memo(() => {
     const isPassword = passwordValidation(password);
     const isMatch = passwordMatcher(password, repeatPassword);
 
-    if (isEmail && isPassword && isMatch) console.log("send all");
+    if (isEmail && isPassword && isMatch) {
+      console.log("send all");
+      return;
+    }
     isEmail ? setIsValidEmail(true) : setIsValidEmail(false);
     isPassword ? setIsValidPassword(true) : setIsValidPassword(false);
     isMatch ? setIsMatchPassword(true) : setIsMatchPassword(false);
@@ -41,7 +44,7 @@ export const RegistrationPage = memo(() => {
         Hello from Registration page
       </Typography>
       <form onSubmit={submitHandler}>
-        <Box display="flex" gap={3} marginTop={3}>
+        <Box display="flex" gap={3} marginTop={2}>
           <FormControl sx={{ minWidth: "25%" }} variant="standard">
             <InputLabel>Email</InputLabel>
             <Input
@@ -89,14 +92,14 @@ export const RegistrationPage = memo(() => {
           type="submit"
           sx={{ maxWidth: "25%", marginRight: 2 }}
         >
-          Login with password
+          Registration with password
         </Button>
         <Button
           onClick={() => loginWithRedirect()}
           variant="contained"
           sx={{ maxWidth: "25%" }}
         >
-          Login with google
+          Registration with google
         </Button>
       </form>
     </Container>

@@ -25,13 +25,16 @@ export const LoginPage = memo(() => {
     const isEmail = emailValidation(email);
     const isPassword = passwordValidation(password);
 
-    if (isEmail && isPassword) console.log("send all");
+    if (isEmail && isPassword) {
+      console.log("send all");
+      return;
+    }
     isEmail ? setIsValidEmail(true) : setIsValidEmail(false);
     isPassword ? setIsValidPassword(true) : setIsValidPassword(false);
   };
 
   const logOutHandler = () => {
-    logout().then((data) => console.log(data));
+    logout();
   };
 
   const tokenHandler = async () => {
