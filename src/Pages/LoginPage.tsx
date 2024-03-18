@@ -38,7 +38,7 @@ export const LoginPage = memo(() => {
   const tokenHandler = async () => {
     const token = await data.getAccessTokenSilently();
     console.log(token);
-    const response = await fetch("http://35.157.234.188/auth/me", {
+    fetch("http://35.157.234.188/auth/me", {
       mode: "cors",
       method: "GET",
       headers: {

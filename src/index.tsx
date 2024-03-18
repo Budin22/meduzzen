@@ -19,6 +19,7 @@ root.render(
           domain="dev-j5yx0w-e.us.auth0.com"
           clientId="tMBIoDwuV0rP5JmdInvqrcZEs2Tu5Glt"
           authorizationParams={{
+            audience: "https://internship-example.com",
             redirect_uri: window.location.origin,
           }}
         >
