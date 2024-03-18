@@ -18,8 +18,7 @@ export const LoginPage = memo(() => {
   const [password, setPassword] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidPassword, setIsValidPassword] = useState(true);
-  const data = useAuth0();
-  console.log(data);
+  const { logout, loginWithRedirect, getAccessTokenSilently } = useAuth0();
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,11 +31,11 @@ export const LoginPage = memo(() => {
   };
 
   const logOutHandler = () => {
-    data.logout().then((data) => console.log(data));
+    logout().then((data) => console.log(data));
   };
 
   const tokenHandler = async () => {
-    const token = await data.getAccessTokenSilently();
+    const token = await getAccessTokenSilently();
     console.log(token);
     fetch("http://35.157.234.188/auth/me", {
       mode: "cors",
@@ -105,7 +104,7 @@ export const LoginPage = memo(() => {
           Log out
         </Button>
         <Button
-          onClick={() => data.loginWithRedirect()}
+          onClick={() => loginWithRedirect()}
           variant="contained"
           sx={{ maxWidth: "25%" }}
         >
