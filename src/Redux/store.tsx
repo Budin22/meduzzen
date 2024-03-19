@@ -4,7 +4,7 @@ import * as User from "./Reducers/userReduces";
 
 export const store = configureStore({
   reducer: {
-    users: User.reducer,
+    currentUser: User.reducer,
   },
 });
 

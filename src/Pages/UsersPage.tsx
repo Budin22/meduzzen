@@ -1,33 +1,21 @@
 import React, { memo } from "react";
-import { Container, Stack, Typography } from "@mui/material";
-import { useDispatchAddUser, useSelectorUser } from "../Hooks/user-hooks";
-import Button from "@mui/material/Button";
+import { Container, Typography } from "@mui/material";
+import { Header } from "../Components/Header";
+import { useSelectorCurrentUser } from "../Hooks/user-hooks";
+import { Unauthorized } from "../Components/Unauthorized";
 
 export const UsersPage = memo(() => {
-  const { users } = useSelectorUser();
-  const dispatchAddUser = useDispatchAddUser();
-  const addUser = () => {
-    dispatchAddUser({
-      id: users.length + 1,
-      email: "mail111@sdfsdf.com",
-      firstName: "1",
-      lastName: "1",
-    });
-  };
+  const currentUser = useSelectorCurrentUser();
   return (
     <Container>
-      <Typography variant="h1" gutterBottom color="steelblue">
-        Hello from Users page
-      </Typography>
-      <Button onClick={addUser}>Add user</Button>
-      <Stack>
-        {users?.length !== 0 &&
-          users.map((u) => (
-            <span key={u.id}>
-              {u.id}. {u.email}
-            </span>
-          ))}
-      </Stack>
+      <Header />
+      {currentUser ? (
+        <Typography variant="h1" gutterBottom color="steelblue">
+          Hello from Users page
+        </Typography>
+      ) : (
+        <Unauthorized />
+      )}
     </Container>
   );
 });

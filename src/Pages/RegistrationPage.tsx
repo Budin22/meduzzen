@@ -1,4 +1,4 @@
-import React, { FormEvent, memo, useState } from "react";
+import React, { FormEvent, memo, useEffect, useState } from "react";
 import {
   Container,
   FormControl,
@@ -13,15 +13,30 @@ import { passwordValidation } from "../Util/passwordValidation";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { passwordMatcher } from "../Util/passwordMatcher";
+import { createUser } from "../Api/user-api";
+import { RegistrationUser } from "../Type/userTypes";
+import { useNavigate } from "react-router-dom";
+import { Header } from "../Components/Header";
+import { useSelectorCurrentUser } from "../Hooks/user-hooks";
 
 export const RegistrationPage = memo(() => {
+  const navigation = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidPassword, setIsValidPassword] = useState(true);
   const [isMatchPassword, setIsMatchPassword] = useState(true);
   const { loginWithRedirect } = useAuth0();
+
+  const currentUser = useSelectorCurrentUser();
+  useEffect(() => {
+    if (currentUser) {
+      navigation("/");
+    }
+  }, [currentUser, navigation]);
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,7 +45,24 @@ export const RegistrationPage = memo(() => {
     const isMatch = passwordMatcher(password, repeatPassword);
 
     if (isEmail && isPassword && isMatch) {
-      console.log("send all");
+      const user: RegistrationUser = {
+        user_email: email,
+        user_password: password,
+        user_password_repeat: repeatPassword,
+        user_firstname: firstName,
+        user_lastname: lastName,
+      };
+      createUser(user)
+        .then((data) => {
+          console.log(data);
+          alert("User created");
+          navigation("/auth/login");
+        })
+        .catch((err) => {
+          alert(err.response.data.detail);
+          console.log(err.response.data);
+        });
+
       return;
     }
     isEmail ? setIsValidEmail(true) : setIsValidEmail(false);
@@ -40,6 +72,7 @@ export const RegistrationPage = memo(() => {
 
   return (
     <Container>
+      <Header />
       <Typography variant="h1" gutterBottom color="steelblue">
         Hello from Registration page
       </Typography>
@@ -85,6 +118,18 @@ export const RegistrationPage = memo(() => {
                 Password should be match
               </FormHelperText>
             )}
+          </FormControl>
+        </Box>
+        <Box display="flex" gap={3} marginBottom={2}>
+          <FormControl sx={{ minWidth: "25%" }} variant="standard">
+            <InputLabel>First name</InputLabel>
+            <Input onChange={(e) => setFirstName(e.target.value)} />
+          </FormControl>
+        </Box>
+        <Box display="flex" gap={3} marginBottom={2}>
+          <FormControl sx={{ minWidth: "25%" }} variant="standard">
+            <InputLabel>Last name</InputLabel>
+            <Input onChange={(e) => setLastName(e.target.value)} />
           </FormControl>
         </Box>
         <Button

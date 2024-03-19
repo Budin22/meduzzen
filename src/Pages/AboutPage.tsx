@@ -1,27 +1,36 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { Container, Typography } from "@mui/material";
-import { useHealthCheckQuery } from "../Hooks/queries/useHealthCheckQuery";
+import { getUser } from "../Api/user-api";
+import {
+  useDispatchSetCurrentUser,
+  useSelectorCurrentUser,
+} from "../Hooks/user-hooks";
+import { Header } from "../Components/Header";
 
 export const AboutPage = memo(() => {
-  const { data, isLoading } = useHealthCheckQuery();
-  console.log(data);
+  const currentUser = useSelectorCurrentUser();
+  const dispatchSetCurrentUser = useDispatchSetCurrentUser();
+  console.log(currentUser);
+
+  useEffect(() => {
+    if (currentUser) return;
+    const token = localStorage.getItem("token");
+    if (token) {
+      getUser(token)
+        .then((data) => {
+          console.log(data);
+          dispatchSetCurrentUser(data.result);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [dispatchSetCurrentUser, currentUser]);
 
   return (
     <Container>
-      {isLoading ? (
-        <Typography variant="h1" gutterBottom color="steelblue">
-          Loading
-        </Typography>
-      ) : data ? (
-        <Typography variant="h1" gutterBottom color="steelblue">
-          detail: {data.detail}, result: {data.result}, status:
-          {data.status_code}
-        </Typography>
-      ) : (
-        <Typography variant="h1" gutterBottom color="red">
-          Something went wrong
-        </Typography>
-      )}
+      <Header />
+      <Typography variant="h1" gutterBottom color="steelblue">
+        About Page
+      </Typography>
     </Container>
   );
 });

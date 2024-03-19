@@ -1,4 +1,4 @@
-import React, { FormEvent, memo, useState } from "react";
+import React, { FormEvent, memo, useEffect, useState } from "react";
 import {
   Container,
   FormControl,
@@ -12,13 +12,27 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Box from "@mui/material/Box";
 import { emailValidation } from "../Util/emailValidation";
 import { passwordValidation } from "../Util/passwordValidation";
+import { loginUser } from "../Api/user-api";
+import { LoginUser } from "../Type/userTypes";
+import { useNavigate } from "react-router-dom";
+import { setTokenToLS } from "../Type/tokenActions";
+import { Header } from "../Components/Header";
+import { useSelectorCurrentUser } from "../Hooks/user-hooks";
 
 export const LoginPage = memo(() => {
+  const navigation = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidPassword, setIsValidPassword] = useState(true);
-  const { logout, loginWithRedirect, getAccessTokenSilently } = useAuth0();
+  const { loginWithRedirect } = useAuth0();
+  const currentUser = useSelectorCurrentUser();
+
+  useEffect(() => {
+    if (currentUser) {
+      navigation("/");
+    }
+  }, [currentUser, navigation]);
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,35 +40,25 @@ export const LoginPage = memo(() => {
     const isPassword = passwordValidation(password);
 
     if (isEmail && isPassword) {
-      console.log("send all");
+      const user: LoginUser = {
+        user_email: email,
+        user_password: password,
+      };
+      loginUser(user)
+        .then((data) => {
+          setTokenToLS(data.result.access_token);
+          navigation("/about");
+        })
+        .catch((err) => console.log(err.response.data));
       return;
     }
     isEmail ? setIsValidEmail(true) : setIsValidEmail(false);
     isPassword ? setIsValidPassword(true) : setIsValidPassword(false);
   };
 
-  const logOutHandler = () => {
-    logout();
-  };
-
-  const tokenHandler = async () => {
-    const token = await getAccessTokenSilently();
-    console.log(token);
-    fetch("http://35.157.234.188/auth/me", {
-      mode: "cors",
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": " application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((data) => data.json())
-      .then((data) => console.log(data));
-  };
-
   return (
     <Container>
+      <Header />
       <Typography variant="h1" gutterBottom color="steelblue">
         Hello from Login page
       </Typography>
@@ -91,20 +95,6 @@ export const LoginPage = memo(() => {
           sx={{ maxWidth: "25%", marginRight: 2 }}
         >
           Login with password
-        </Button>
-        <Button
-          variant="contained"
-          onClick={tokenHandler}
-          sx={{ maxWidth: "25%", marginRight: 2 }}
-        >
-          Get token
-        </Button>
-        <Button
-          variant="contained"
-          onClick={logOutHandler}
-          sx={{ maxWidth: "25%", marginRight: 2 }}
-        >
-          Log out
         </Button>
         <Button
           onClick={() => loginWithRedirect()}
