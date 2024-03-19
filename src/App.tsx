@@ -16,6 +16,8 @@ export const App = () => {
   const dispatchSetCurrentUser = useDispatchSetCurrentUser();
 
   useEffect(() => {
+    if (currentUser) return;
+
     const lsToken = getTokenFromLS();
     if (lsToken) {
       getUser(lsToken).then((res) => {
@@ -23,7 +25,8 @@ export const App = () => {
       });
       return;
     }
-    if (isAuthenticated && !currentUser) {
+
+    if (isAuthenticated) {
       getAccessTokenSilently()
         .then((token) => {
           setTokenToLS(token);
