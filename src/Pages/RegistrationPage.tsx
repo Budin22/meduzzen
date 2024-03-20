@@ -15,7 +15,7 @@ import { passwordMatcher } from "../Util/passwordMatcher";
 import { createUser } from "../Api/user-api";
 import { RegistrationUser } from "../Type/userTypes";
 import { useNavigate } from "react-router-dom";
-import { useSelectorCurrentUser } from "../Hooks/user-hooks";
+import { useSelectorCurrentUser } from "../Hooks/current-user-hooks";
 import { GenericUnauthorizedPage } from "../Components/Generic-Page/GenericUnauthorizedPage";
 
 export const RegistrationPage = memo(() => {

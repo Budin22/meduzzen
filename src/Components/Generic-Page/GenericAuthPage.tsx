@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import {
   useDispatchSetCurrentUser,
   useSelectorCurrentUser,
-} from "../../Hooks/user-hooks";
+} from "../../Hooks/current-user-hooks";
 import { getTokenFromLS, setTokenToLS } from "../../Type/tokenActions";
 import { getUser } from "../../Api/user-api";
 import { GenericPageProps } from "./generic-page-props";

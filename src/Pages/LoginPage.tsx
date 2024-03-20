@@ -15,7 +15,7 @@ import { loginUser } from "../Api/user-api";
 import { LoginUser } from "../Type/userTypes";
 import { useNavigate } from "react-router-dom";
 import { setTokenToLS } from "../Type/tokenActions";
-import { useSelectorCurrentUser } from "../Hooks/user-hooks";
+import { useSelectorCurrentUser } from "../Hooks/current-user-hooks";
 import { GenericUnauthorizedPage } from "../Components/Generic-Page/GenericUnauthorizedPage";
 
 export const LoginPage = memo(() => {

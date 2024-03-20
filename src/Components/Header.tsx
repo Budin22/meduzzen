@@ -12,7 +12,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "@mui/material";
 import { memo, useCallback } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatchRemoveCurrentUser } from "../Hooks/user-hooks";
+import { useDispatchRemoveCurrentUser } from "../Hooks/current-user-hooks";
 import { removeToken } from "../Type/tokenActions";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
