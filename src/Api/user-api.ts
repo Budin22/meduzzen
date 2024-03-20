@@ -1,4 +1,3 @@
-import { baseUrl } from "../Config/base-url";
 import {
   AuthUserSuccessfulRes,
   LoginUser,
@@ -6,29 +5,24 @@ import {
   RegistrationUser,
   RegistrationUserSuccessfulRes,
 } from "../Type/userTypes";
-import axios from "axios";
-
-const instance = axios.create({
-  baseURL: baseUrl,
-  headers: { "Content-Type": "application/json" },
-});
+import { axiosInstance } from "./axios-instance";
 
 export const createUser = async (
   user: RegistrationUser,
 ): Promise<RegistrationUserSuccessfulRes> => {
-  return await instance.post("/user/", user).then((res) => res.data);
+  return await axiosInstance.post("/user/", user).then((res) => res.data);
 };
 
 export const loginUser = async (
   user: LoginUser,
 ): Promise<LoginUserSuccessfulRes> => {
-  return await instance.post("/auth/login", user).then((res) => res.data);
+  return await axiosInstance.post("/auth/login", user).then((res) => res.data);
 };
 
 export const getUser = async (
   token: string,
 ): Promise<AuthUserSuccessfulRes> => {
-  return await instance
+  return await axiosInstance
     .get("/auth/me/", { headers: { Authorization: "Bearer " + token } })
     .then((res) => res.data);
 };

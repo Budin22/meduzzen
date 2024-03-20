@@ -1,14 +1,8 @@
-import axios from "axios";
 import { HealthCheck } from "../Hooks/queries/useHealthCheckQuery";
-import { baseUrl } from "../Config/base-url";
-
-const instance = axios.create({
-  baseURL: baseUrl,
-  headers: { "Content-Type": "application/json" },
-});
+import { axiosInstance } from "./axios-instance";
 
 export const getHealthCheck = async (): Promise<HealthCheck> => {
-  return await instance
+  return await axiosInstance
     .get("/")
     .then((res) => res.data)
     .catch((err) => {
