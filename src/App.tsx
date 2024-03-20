@@ -1,12 +1,13 @@
 import React from "react";
-import { Container, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
+import { GenericAccessPage } from "./Components/Generic-Page/GenericAccessPage";
 
 export const App = () => {
   return (
-    <Container>
+    <GenericAccessPage>
       <Typography variant="h1" gutterBottom color="steelblue">
         Hello from MEDUZZEN
       </Typography>
-    </Container>
+    </GenericAccessPage>
   );
 };

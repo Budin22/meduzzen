@@ -1,19 +1,30 @@
-import { useAppDispatch } from "../Redux/store";
+import { RootState, useAppDispatch, useAppSelector } from "../Redux/store";
 import { useCallback, useMemo } from "react";
 import * as User from "../Redux/Reducers/userReduces";
-import { useSelectorAll } from "./useSelectorAll";
+import { AuthUser } from "../Type/userTypes";
+import { UserInitialState } from "../Redux/Reducers/userReduces";
 
-export const useDispatchAddUser = () => {
+const selectorCurrentUser = (state: RootState): UserInitialState =>
+  state.currentUser;
+
+export const useSelectorCurrentUser = (): AuthUser => {
+  const { currentUser } = useAppSelector(selectorCurrentUser);
+  const user = currentUser[0];
+  return useMemo(() => user, [user]);
+};
+export const useDispatchSetCurrentUser = () => {
   const dispatch = useAppDispatch();
   return useCallback(
-    (action: User.User) => {
-      dispatch(User.addUser(action));
+    (action: AuthUser) => {
+      dispatch(User.setCurrentUser(action));
     },
     [dispatch],
   );
 };
 
-export const useSelectorUser = (): User.UserInitialState => {
-  const { users } = useSelectorAll();
-  return useMemo(() => users, [users]);
+export const useDispatchRemoveCurrentUser = () => {
+  const dispatch = useAppDispatch();
+  return useCallback(() => {
+    dispatch(User.removeCurrentUser());
+  }, [dispatch]);
 };
