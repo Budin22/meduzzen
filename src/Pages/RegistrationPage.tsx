@@ -1,6 +1,5 @@
 import React, { FormEvent, memo, useEffect, useState } from "react";
 import {
-  Container,
   FormControl,
   FormHelperText,
   Input,
@@ -16,8 +15,8 @@ import { passwordMatcher } from "../Util/passwordMatcher";
 import { createUser } from "../Api/user-api";
 import { RegistrationUser } from "../Type/userTypes";
 import { useNavigate } from "react-router-dom";
-import { Header } from "../Components/Header";
 import { useSelectorCurrentUser } from "../Hooks/user-hooks";
+import { GenericUnauthorizedPage } from "../Components/Generic-Page/GenericUnauthorizedPage";
 
 export const RegistrationPage = memo(() => {
   const navigation = useNavigate();
@@ -71,8 +70,7 @@ export const RegistrationPage = memo(() => {
   };
 
   return (
-    <Container>
-      <Header />
+    <GenericUnauthorizedPage>
       <Typography variant="h1" gutterBottom color="steelblue">
         Hello from Registration page
       </Typography>
@@ -147,6 +145,6 @@ export const RegistrationPage = memo(() => {
           Registration with google
         </Button>
       </form>
-    </Container>
+    </GenericUnauthorizedPage>
   );
 });

@@ -1,14 +1,13 @@
 import React, { memo } from "react";
-import { Container, Typography } from "@mui/material";
-import { Header } from "../Components/Header";
+import { Typography } from "@mui/material";
+import { GenericAccessPage } from "../Components/Generic-Page/GenericAccessPage";
 
 export const AboutPage = memo(() => {
   return (
-    <Container>
-      <Header />
+    <GenericAccessPage>
       <Typography variant="h1" gutterBottom color="steelblue">
         About Page
       </Typography>
-    </Container>
+    </GenericAccessPage>
   );
 });

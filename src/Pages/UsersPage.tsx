@@ -1,21 +1,13 @@
 import React, { memo } from "react";
-import { Container, Typography } from "@mui/material";
-import { Header } from "../Components/Header";
-import { useSelectorCurrentUser } from "../Hooks/user-hooks";
-import { Unauthorized } from "../Components/Unauthorized";
+import { Typography } from "@mui/material";
+import { GenericAuthPage } from "../Components/Generic-Page/GenericAuthPage";
 
 export const UsersPage = memo(() => {
-  const currentUser = useSelectorCurrentUser();
   return (
-    <Container>
-      <Header />
-      {currentUser ? (
-        <Typography variant="h1" gutterBottom color="steelblue">
-          Hello from Users page
-        </Typography>
-      ) : (
-        <Unauthorized />
-      )}
-    </Container>
+    <GenericAuthPage>
+      <Typography variant="h1" gutterBottom color="steelblue">
+        Hello from Users page
+      </Typography>
+    </GenericAuthPage>
   );
 });
