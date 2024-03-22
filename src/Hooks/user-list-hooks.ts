@@ -2,9 +2,9 @@ import { RootState, useAppDispatch, useAppSelector } from "../Redux/store";
 import { useCallback, useMemo } from "react";
 import * as Users from "../Redux/Reducers/usersReduces";
 import { UserListItem } from "../Type/userTypes";
-import { UsersInitialState } from "../Redux/Reducers/usersReduces";
+import { UserListInitialState } from "../Redux/Reducers/usersReduces";
 
-const selectorUsers = (state: RootState): UsersInitialState => state.users;
+const selectorUsers = (state: RootState): UserListInitialState => state.users;
 
 export const useSelectorUsers = (): UserListItem[] => {
   const { users } = useAppSelector(selectorUsers);
