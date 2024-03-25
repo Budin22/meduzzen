@@ -44,7 +44,7 @@ export const UserProfilePage = memo(() => {
         {targetUser && (
           <>
             <UserItem user={targetUser} />
-            {isChangeable && <UpdateUserForm />}
+            {isChangeable || (targetUser.is_superuser && <UpdateUserForm />)}
           </>
         )}
       </GenericAuthContent>
