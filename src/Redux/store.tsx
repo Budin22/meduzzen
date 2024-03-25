@@ -1,14 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import * as CurrentUser from "./Reducers/currentUserReduces";
-import * as Users from "./Reducers/usersReduces";
-import * as ProfileUser from "./Reducers/profileUserReduces";
+import * as UserList from "./Reducers/userListReduces";
+import * as TargetUser from "./Reducers/targetUserReduces";
+import * as AuthToken from "./Reducers/authTokenReducer";
 
 export const store = configureStore({
   reducer: {
     currentUser: CurrentUser.reducer,
-    users: Users.reducer,
-    profileUser: ProfileUser.reducer,
+    userList: UserList.reducer,
+    targetUser: TargetUser.reducer,
+    authToken: AuthToken.reducer,
   },
 });
 

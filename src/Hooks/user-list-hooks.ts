@@ -1,40 +1,21 @@
 import { RootState, useAppDispatch, useAppSelector } from "../Redux/store";
 import { useCallback, useMemo } from "react";
-import * as Users from "../Redux/Reducers/usersReduces";
-import { UserListItem } from "../Type/userTypes";
-import { UserListInitialState } from "../Redux/Reducers/usersReduces";
+import * as UserList from "../Redux/Reducers/userListReduces";
+import { UserListInitialState } from "../Redux/Reducers/userListReduces";
 
-const selectorUsers = (state: RootState): UserListInitialState => state.users;
+const selectorUserList = (state: RootState): UserListInitialState =>
+  state.userList;
 
-export const useSelectorUsers = (): UserListItem[] => {
-  const { users } = useAppSelector(selectorUsers);
-  return useMemo(() => users, [users]);
-};
-export const useDispatchAddUserToList = () => {
-  const dispatch = useAppDispatch();
-  return useCallback(
-    (action: UserListItem) => {
-      dispatch(Users.addUserToList(action));
-    },
-    [dispatch],
-  );
+export const useSelectorUserList = (): UserListInitialState => {
+  const userList = useAppSelector(selectorUserList);
+  return useMemo(() => userList, [userList]);
 };
 
-export const useDispatchAddUserList = () => {
+export const useDispatchSetUserList = () => {
   const dispatch = useAppDispatch();
   return useCallback(
-    (action: UserListItem[]) => {
-      dispatch(Users.addUserList(action));
-    },
-    [dispatch],
-  );
-};
-
-export const useDispatchSetAllUsers = () => {
-  const dispatch = useAppDispatch();
-  return useCallback(
-    (action: UserListItem[]) => {
-      dispatch(Users.setAllUsers(action));
+    (action: UserListInitialState) => {
+      dispatch(UserList.setUserList(action));
     },
     [dispatch],
   );

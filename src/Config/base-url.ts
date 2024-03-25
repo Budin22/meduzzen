@@ -1,3 +1,3 @@
 export const baseUrl = process.env.REACT_APP_BASEURL
   ? process.env.REACT_APP_BASEURL
-  : "http://35.157.234.188";
+  : "http://51.20.210.187";

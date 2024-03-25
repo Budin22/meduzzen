@@ -12,8 +12,12 @@ import { NavLink } from "react-router-dom";
 import { Button } from "@mui/material";
 import { memo, useCallback } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatchRemoveCurrentUser } from "../Hooks/current-user-hooks";
+import {
+  useDispatchRemoveCurrentUser,
+  useSelectorCurrentUser,
+} from "../Hooks/current-user-hooks";
 import { removeToken } from "../Type/tokenActions";
+import { useDispatchRemoveAuthToken } from "../Hooks/auth-token-hooks";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   color: "inherit",
@@ -48,13 +52,16 @@ const pages = [
 ];
 
 export const Header = memo(() => {
+  const currentUser = useSelectorCurrentUser();
   const dispatchRemoveCurrentUser = useDispatchRemoveCurrentUser();
+  const dispatchRemoveAuthToken = useDispatchRemoveAuthToken();
   const { logout } = useAuth0();
   const logOutHandler = useCallback(() => {
-    dispatchRemoveCurrentUser();
     removeToken();
+    dispatchRemoveCurrentUser();
+    dispatchRemoveAuthToken();
     logout();
-  }, [logout, dispatchRemoveCurrentUser]);
+  }, [logout, dispatchRemoveCurrentUser, dispatchRemoveAuthToken]);
   return (
     <Box sx={{ flexGrow: 1 }} position="relative">
       <AppBar position="fixed">
@@ -87,6 +94,13 @@ export const Header = memo(() => {
             ))}
           </Box>
           <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ marginRight: 2 }}>
+            {currentUser && (
+              <Typography component="span">
+                id: {currentUser.user_id} email: {currentUser.user_email}
+              </Typography>
+            )}
+          </Box>
           <Button
             variant="contained"
             onClick={logOutHandler}

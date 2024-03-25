@@ -6,14 +6,6 @@ export interface RegistrationUser {
   user_lastname: string;
 }
 
-export interface RegistrationUserSuccessfulRes {
-  status_code: number;
-  detail: string;
-  result: {
-    user_id: number;
-  };
-}
-
 export interface RegistrationUserFailRes {
   detail: [
     {
@@ -78,11 +70,13 @@ export interface UserListItem {
 export interface GetAllUserSuccessfulRes {
   status_code: number;
   detail: string;
-  result: UserListItem[];
-  pagination: {
-    current_page: number;
-    total_page: number;
-    total_results: number;
+  result: {
+    users: UserListItem[];
+    pagination: {
+      current_page: number;
+      total_page: number;
+      total_results: number;
+    };
   };
 }
 
@@ -101,7 +95,12 @@ export interface UserInfo {
   user_links: string[];
 }
 
-export interface UserUpdateSuccessfulRes {
+export interface ChangePassword {
+  user_password: string;
+  user_password_repeat: string;
+}
+
+export interface UserSuccessfulRes {
   status_code: number;
   detail: string;
   result: {
@@ -109,7 +108,8 @@ export interface UserUpdateSuccessfulRes {
   };
 }
 
-export interface ChangePassword {
-  user_password: string;
-  user_password_repeat: string;
+export interface UserAvatarUpdateSuccessfulRes {
+  status_code: number;
+  detail: string;
+  result: string;
 }

@@ -29,7 +29,8 @@ export const {
   initialState: userListInitialState,
   reducers: {
     setUserList(state, action: PayloadAction<UserListInitialState>) {
-      state = action.payload;
+      state.users = action.payload.users;
+      state.pagination = action.payload.pagination;
     },
   },
 });

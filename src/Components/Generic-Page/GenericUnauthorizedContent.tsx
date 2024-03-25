@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/material";
 import { GenericPageProps } from "./generic-page-props";
 
-export const GenericUnauthorizedPage = memo(
+export const GenericUnauthorizedContent = memo(
   ({ children }: GenericPageProps) => {
     const navigation = useNavigate();
     const { isAuthenticated } = useAuth0();

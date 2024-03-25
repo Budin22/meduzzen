@@ -1,4 +1,4 @@
-import React, { FormEvent, memo, useEffect, useState } from "react";
+import React, { FormEvent, memo, useState } from "react";
 import {
   FormControl,
   FormHelperText,
@@ -15,8 +15,8 @@ import { passwordMatcher } from "../Util/passwordMatcher";
 import { createUser } from "../Api/user-api";
 import { RegistrationUser } from "../Type/userTypes";
 import { useNavigate } from "react-router-dom";
-import { useSelectorCurrentUser } from "../Hooks/current-user-hooks";
-import { GenericUnauthorizedPage } from "../Components/Generic-Page/GenericUnauthorizedPage";
+import { GenericUnauthorizedContent } from "../Components/Generic-Page/GenericUnauthorizedContent";
+import { GenericPage } from "../Components/Generic-Page/GenericPage";
 
 export const RegistrationPage = memo(() => {
   const navigation = useNavigate();
@@ -29,13 +29,6 @@ export const RegistrationPage = memo(() => {
   const [isValidPassword, setIsValidPassword] = useState(true);
   const [isMatchPassword, setIsMatchPassword] = useState(true);
   const { loginWithRedirect } = useAuth0();
-
-  const currentUser = useSelectorCurrentUser();
-  useEffect(() => {
-    if (currentUser) {
-      navigation("/");
-    }
-  }, [currentUser, navigation]);
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,7 +54,6 @@ export const RegistrationPage = memo(() => {
           alert(err.response.data.detail);
           console.log(err.response.data);
         });
-
       return;
     }
     isEmail ? setIsValidEmail(true) : setIsValidEmail(false);
@@ -70,81 +62,83 @@ export const RegistrationPage = memo(() => {
   };
 
   return (
-    <GenericUnauthorizedPage>
-      <Typography variant="h1" gutterBottom color="steelblue">
-        Hello from Registration page
-      </Typography>
-      <form onSubmit={submitHandler}>
-        <Box display="flex" gap={3} marginTop={2}>
-          <FormControl sx={{ minWidth: "25%" }} variant="standard">
-            <InputLabel>Email</InputLabel>
-            <Input
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@example.com"
-            />
-            {!isValidEmail && (
-              <FormHelperText id="email" error>
-                not valid email
-              </FormHelperText>
-            )}
-          </FormControl>
-        </Box>
-        <Box display="flex" gap={3} marginBottom={2}>
-          <FormControl sx={{ minWidth: "25%" }} variant="standard">
-            <InputLabel>Password</InputLabel>
-            <Input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {!isValidPassword && (
-              <FormHelperText id="password" error>
-                At least one: lowercase letter, uppercase letter, digit, special
-                character[@$!%_*?&] and 8 characters
-              </FormHelperText>
-            )}
-          </FormControl>
-        </Box>
-        <Box display="flex" gap={3} marginBottom={2}>
-          <FormControl sx={{ minWidth: "25%" }} variant="standard">
-            <InputLabel>Repeat password</InputLabel>
-            <Input
-              type="password"
-              onChange={(e) => setRepeatPassword(e.target.value)}
-            />
-            {!isMatchPassword && (
-              <FormHelperText id="repeat_pasword" error>
-                Password should be match
-              </FormHelperText>
-            )}
-          </FormControl>
-        </Box>
-        <Box display="flex" gap={3} marginBottom={2}>
-          <FormControl sx={{ minWidth: "25%" }} variant="standard">
-            <InputLabel>First name</InputLabel>
-            <Input onChange={(e) => setFirstName(e.target.value)} />
-          </FormControl>
-        </Box>
-        <Box display="flex" gap={3} marginBottom={2}>
-          <FormControl sx={{ minWidth: "25%" }} variant="standard">
-            <InputLabel>Last name</InputLabel>
-            <Input onChange={(e) => setLastName(e.target.value)} />
-          </FormControl>
-        </Box>
-        <Button
-          variant="contained"
-          type="submit"
-          sx={{ maxWidth: "25%", marginRight: 2 }}
-        >
-          Registration with password
-        </Button>
-        <Button
-          onClick={() => loginWithRedirect()}
-          variant="contained"
-          sx={{ maxWidth: "25%" }}
-        >
-          Registration with google
-        </Button>
-      </form>
-    </GenericUnauthorizedPage>
+    <GenericPage>
+      <GenericUnauthorizedContent>
+        <Typography variant="h1" gutterBottom color="steelblue">
+          Hello from Registration page
+        </Typography>
+        <form onSubmit={submitHandler}>
+          <Box display="flex" gap={3} marginTop={2}>
+            <FormControl sx={{ minWidth: "25%" }} variant="standard">
+              <InputLabel>Email</InputLabel>
+              <Input
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="name@example.com"
+              />
+              {!isValidEmail && (
+                <FormHelperText id="email" error>
+                  not valid email
+                </FormHelperText>
+              )}
+            </FormControl>
+          </Box>
+          <Box display="flex" gap={3} marginBottom={2}>
+            <FormControl sx={{ minWidth: "25%" }} variant="standard">
+              <InputLabel>Password</InputLabel>
+              <Input
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {!isValidPassword && (
+                <FormHelperText id="password" error>
+                  At least one: lowercase letter, uppercase letter, digit,
+                  special character[@$!%_*?&] and 8 characters
+                </FormHelperText>
+              )}
+            </FormControl>
+          </Box>
+          <Box display="flex" gap={3} marginBottom={2}>
+            <FormControl sx={{ minWidth: "25%" }} variant="standard">
+              <InputLabel>Repeat password</InputLabel>
+              <Input
+                type="password"
+                onChange={(e) => setRepeatPassword(e.target.value)}
+              />
+              {!isMatchPassword && (
+                <FormHelperText id="repeat_pasword" error>
+                  Password should be match
+                </FormHelperText>
+              )}
+            </FormControl>
+          </Box>
+          <Box display="flex" gap={3} marginBottom={2}>
+            <FormControl sx={{ minWidth: "25%" }} variant="standard">
+              <InputLabel>First name</InputLabel>
+              <Input onChange={(e) => setFirstName(e.target.value)} />
+            </FormControl>
+          </Box>
+          <Box display="flex" gap={3} marginBottom={2}>
+            <FormControl sx={{ minWidth: "25%" }} variant="standard">
+              <InputLabel>Last name</InputLabel>
+              <Input onChange={(e) => setLastName(e.target.value)} />
+            </FormControl>
+          </Box>
+          <Button
+            variant="contained"
+            type="submit"
+            sx={{ maxWidth: "25%", marginRight: 2 }}
+          >
+            Registration with password
+          </Button>
+          <Button
+            onClick={() => loginWithRedirect()}
+            variant="contained"
+            sx={{ maxWidth: "25%" }}
+          >
+            Registration with google
+          </Button>
+        </form>
+      </GenericUnauthorizedContent>
+    </GenericPage>
   );
 });
