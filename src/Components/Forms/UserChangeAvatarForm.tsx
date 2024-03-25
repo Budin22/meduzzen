@@ -25,7 +25,7 @@ export const UserChangeAvatarForm = memo(
   }) => {
     const dispatchSetTargetUser = useDispatchSetTargetUser();
     const dispatchSetCurrentUser = useDispatchSetCurrentUser();
-    const [uploadedImage, setUploadedImage] = useState("");
+    const [uploadedImage, setUploadedImage] = useState<File>();
 
     const changeAvatarHandler = useCallback(
       (e: FormEvent<HTMLFormElement>) => {
@@ -33,7 +33,7 @@ export const UserChangeAvatarForm = memo(
         const formData = new FormData();
         if (uploadedImage) {
           formData.append("file", uploadedImage);
-          changeAvatar(formData, token, targetUser.user_id)
+          changeAvatar(uploadedImage, token, targetUser.user_id)
             .then((data) => {
               targetUser.user_avatar = data.result;
               if (targetUser.user_id === currentUser.user_id)
@@ -55,13 +55,7 @@ export const UserChangeAvatarForm = memo(
 
     const setUploadFileHandler = (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
-        const reader = new FileReader();
-        reader.readAsDataURL(e.target.files[0]);
-        reader.onloadend = () => {
-          if (reader.result && typeof reader.result === "string") {
-            setUploadedImage(reader.result);
-          }
-        };
+        if (e.target.files[0]) setUploadedImage(e.target.files[0]);
       }
     };
 
