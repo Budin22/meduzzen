@@ -87,21 +87,17 @@ export const changeUserPassword = async (
 };
 
 export const changeAvatar = async (
-  avatar: File,
+  avatar: FormData,
   token: string,
   id: number,
 ): Promise<UserAvatarUpdateSuccessfulRes> => {
   const url = generateUrlForUserWithId(id) + "update_avatar/";
   return axiosInstance
-    .put(
-      url,
-      { file: avatar },
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "multipart/form-data",
-        },
+    .put(url, avatar, {
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "multipart/form-data",
       },
-    )
+    })
     .then((res) => res.data);
 };

@@ -33,7 +33,7 @@ export const UserChangeAvatarForm = memo(
         const formData = new FormData();
         if (uploadedImage) {
           formData.append("file", uploadedImage);
-          changeAvatar(uploadedImage, token, targetUser.user_id)
+          changeAvatar(formData, token, targetUser.user_id)
             .then((data) => {
               targetUser.user_avatar = data.result;
               if (targetUser.user_id === currentUser.user_id)
