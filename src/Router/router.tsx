@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
     element: <CompaniesPage />,
   },
   {
-    path: "/company/:id",
+    path: "/company/:id/",
     element: <CompanyProfilePage />,
   },
   {
@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
     element: <UsersPage />,
   },
   {
-    path: "/user/:id",
+    path: "/user/:id/",
     element: <UserProfilePage />,
   },
   {

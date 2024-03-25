@@ -2,14 +2,14 @@ import { memo, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Header } from "../Header";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useSelectorCurrentUser } from "../../Hooks/user-hooks";
+import { useSelectorCurrentUser } from "../../Hooks/current-user-hooks";
 import { getTokenFromLS } from "../../Type/tokenActions";
 import { getUser } from "../../Api/user-api";
 import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/material";
 import { GenericPageProps } from "./generic-page-props";
 
-export const GenericUnauthorizedPage = memo(
+export const GenericUnauthorizedContent = memo(
   ({ children }: GenericPageProps) => {
     const navigation = useNavigate();
     const { isAuthenticated } = useAuth0();

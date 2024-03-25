@@ -15,8 +15,9 @@ import { loginUser } from "../Api/user-api";
 import { LoginUser } from "../Type/userTypes";
 import { useNavigate } from "react-router-dom";
 import { setTokenToLS } from "../Type/tokenActions";
-import { useSelectorCurrentUser } from "../Hooks/user-hooks";
-import { GenericUnauthorizedPage } from "../Components/Generic-Page/GenericUnauthorizedPage";
+import { useSelectorCurrentUser } from "../Hooks/current-user-hooks";
+import { GenericUnauthorizedContent } from "../Components/Generic-Page/GenericUnauthorizedContent";
+import { GenericPage } from "../Components/Generic-Page/GenericPage";
 
 export const LoginPage = memo(() => {
   const navigation = useNavigate();
@@ -56,52 +57,54 @@ export const LoginPage = memo(() => {
   };
 
   return (
-    <GenericUnauthorizedPage>
-      <Typography variant="h1" gutterBottom color="steelblue">
-        Hello from Login page
-      </Typography>
-      <form onSubmit={submitHandler}>
-        <Box display="flex" gap={3} marginTop={3}>
-          <FormControl sx={{ minWidth: "25%" }} variant="standard">
-            <InputLabel>Email</InputLabel>
-            <Input
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@example.com"
-            />
-            {!isValidEmail && (
-              <FormHelperText id="email" error>
-                not valid email
-              </FormHelperText>
-            )}
-          </FormControl>
-        </Box>
-        <Box display="flex" gap={3} marginBottom={2}>
-          <FormControl sx={{ minWidth: "25%" }} variant="standard">
-            <InputLabel>Password</InputLabel>
-            <Input onChange={(e) => setPassword(e.target.value)} />
-            {!isValidPassword && (
-              <FormHelperText id="password" error>
-                At least one: lowercase letter, uppercase letter, digit, special
-                character[@$!%_*?&] and 8 characters
-              </FormHelperText>
-            )}
-          </FormControl>
-        </Box>
-        <Button
-          variant="contained"
-          type="submit"
-          sx={{ maxWidth: "25%", marginRight: 2 }}
-        >
-          Login with password
-        </Button>
-        <Button
-          onClick={() => loginWithRedirect()}
-          variant="contained"
-          sx={{ maxWidth: "25%" }}
-        >
-          Login with google
-        </Button>
-      </form>
-    </GenericUnauthorizedPage>
+    <GenericPage>
+      <GenericUnauthorizedContent>
+        <Typography variant="h1" gutterBottom color="steelblue">
+          Hello from Login page
+        </Typography>
+        <form onSubmit={submitHandler}>
+          <Box display="flex" gap={3} marginTop={3}>
+            <FormControl sx={{ minWidth: "25%" }} variant="standard">
+              <InputLabel>Email</InputLabel>
+              <Input
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="name@example.com"
+              />
+              {!isValidEmail && (
+                <FormHelperText id="email" error>
+                  not valid email
+                </FormHelperText>
+              )}
+            </FormControl>
+          </Box>
+          <Box display="flex" gap={3} marginBottom={2}>
+            <FormControl sx={{ minWidth: "25%" }} variant="standard">
+              <InputLabel>Password</InputLabel>
+              <Input onChange={(e) => setPassword(e.target.value)} />
+              {!isValidPassword && (
+                <FormHelperText id="password" error>
+                  At least one: lowercase letter, uppercase letter, digit,
+                  special character[@$!%_*?&] and 8 characters
+                </FormHelperText>
+              )}
+            </FormControl>
+          </Box>
+          <Button
+            variant="contained"
+            type="submit"
+            sx={{ maxWidth: "25%", marginRight: 2 }}
+          >
+            Login with password
+          </Button>
+          <Button
+            onClick={() => loginWithRedirect()}
+            variant="contained"
+            sx={{ maxWidth: "25%" }}
+          >
+            Login with google
+          </Button>
+        </form>
+      </GenericUnauthorizedContent>
+    </GenericPage>
   );
 });

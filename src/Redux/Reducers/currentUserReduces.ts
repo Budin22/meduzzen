@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthUser } from "../../Type/userTypes";
 
-const namespace = "user" as const;
+const namespace = "currentUser" as const;
 
 export interface UserInitialState {
   currentUser: AuthUser[];
