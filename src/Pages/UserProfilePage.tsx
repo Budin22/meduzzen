@@ -24,7 +24,8 @@ export const UserProfilePage = memo(() => {
   useEffect(() => {
     const selectedUserId = Number(id);
     if (!currentUser || !selectedUserId) return;
-    if (currentUser.user_id === selectedUserId) setIsChangeable(true);
+    if (currentUser.user_id === selectedUserId || currentUser.is_superuser)
+      setIsChangeable(true);
     if (targetUser && targetUser.user_id === selectedUserId) return;
 
     getUserById(token, selectedUserId)
