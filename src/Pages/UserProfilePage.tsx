@@ -29,7 +29,6 @@ export const UserProfilePage = memo(() => {
 
     getUserById(token, selectedUserId)
       .then((data) => {
-        console.log(data);
         dispatchSetTargetUser(data.result);
       })
       .catch((err) => console.log(err));
