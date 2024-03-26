@@ -17,7 +17,7 @@ export const GenericUnauthorizedContent = memo(
 
     useEffect(() => {
       if (currentUser || isAuthenticated) {
-        navigation("/");
+        navigation("/users");
         return;
       }
 
@@ -25,7 +25,7 @@ export const GenericUnauthorizedContent = memo(
       if (lsToken) {
         getUser(lsToken)
           .then((res) => {
-            navigation("/");
+            navigation("/users");
           })
           .catch((err) => {
             console.log(err);

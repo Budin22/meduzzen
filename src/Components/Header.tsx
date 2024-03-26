@@ -57,10 +57,10 @@ export const Header = memo(() => {
   const dispatchRemoveAuthToken = useDispatchRemoveAuthToken();
   const { logout } = useAuth0();
   const logOutHandler = useCallback(() => {
+    logout();
     removeToken();
     dispatchRemoveCurrentUser();
     dispatchRemoveAuthToken();
-    logout();
   }, [logout, dispatchRemoveCurrentUser, dispatchRemoveAuthToken]);
   return (
     <Box sx={{ flexGrow: 1 }} position="relative">
