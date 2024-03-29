@@ -47,9 +47,11 @@ export const LoginPage = memo(() => {
       loginUser(user)
         .then((data) => {
           setTokenToLS(data.result.access_token);
-          navigation("/about");
+          navigation("/users");
         })
-        .catch((err) => console.log(err.response.data));
+        .catch((err) => {
+          alert(err.response.data.detail);
+        });
       return;
     }
     isEmail ? setIsValidEmail(true) : setIsValidEmail(false);
@@ -80,7 +82,10 @@ export const LoginPage = memo(() => {
           <Box display="flex" gap={3} marginBottom={2}>
             <FormControl sx={{ minWidth: "25%" }} variant="standard">
               <InputLabel>Password</InputLabel>
-              <Input onChange={(e) => setPassword(e.target.value)} />
+              <Input
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
               {!isValidPassword && (
                 <FormHelperText id="password" error>
                   At least one: lowercase letter, uppercase letter, digit,

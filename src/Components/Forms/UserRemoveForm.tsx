@@ -34,10 +34,10 @@ export const UserRemoveForm = memo(
             if (currentUser.user_id === targetUser.user_id) {
               dispatchRemoveCurrentUser();
             }
-            dispatchRemoveAuthToken();
-            removeToken();
-            dispatchRemoveTargetUser();
             logout();
+            removeToken();
+            dispatchRemoveAuthToken();
+            dispatchRemoveTargetUser();
             navigation("/");
           })
           .catch((err) => console.log(err));
