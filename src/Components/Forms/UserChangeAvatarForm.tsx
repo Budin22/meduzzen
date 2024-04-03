@@ -59,6 +59,7 @@ export const UserChangeAvatarForm = memo(
       }
     };
 
+    console.log(currentUser);
     return (
       <form onSubmit={changeAvatarHandler}>
         <Typography variant="h6" gutterBottom color="steelblue">

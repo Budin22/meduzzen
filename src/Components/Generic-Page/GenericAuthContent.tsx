@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo, useCallback, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Header } from "../Header";
 import { Unauthorized } from "../Unauthorized";
@@ -28,7 +28,14 @@ export const GenericAuthContent = memo(({ children }: GenericPageProps) => {
   const dispatchSetCurrentUser = useDispatchSetCurrentUser();
   const dispatchRemoveCurrentUser = useDispatchRemoveCurrentUser();
 
-  useEffect(() => {
+  const logoutHandler = useCallback(() => {
+    removeToken();
+    dispatchRemoveAuthToken();
+    dispatchRemoveCurrentUser();
+    logout();
+  }, [dispatchRemoveAuthToken, dispatchRemoveCurrentUser, logout]);
+
+  const authHandler = useCallback(() => {
     if (authToken) {
       console.log("authToken");
       setTokenToLS(authToken);
@@ -44,10 +51,7 @@ export const GenericAuthContent = memo(({ children }: GenericPageProps) => {
           dispatchSetCurrentUser(res.result);
         })
         .catch((err) => {
-          removeToken();
-          dispatchRemoveAuthToken();
-          dispatchRemoveCurrentUser();
-          logout();
+          logoutHandler();
           console.log(err);
         });
       return;
@@ -63,29 +67,26 @@ export const GenericAuthContent = memo(({ children }: GenericPageProps) => {
               dispatchSetCurrentUser(res.result);
             })
             .catch((err) => {
-              removeToken();
-              dispatchRemoveAuthToken();
-              dispatchRemoveCurrentUser();
-              logout();
+              logoutHandler();
             });
         })
         .catch((err) => {
-          removeToken();
-          dispatchRemoveAuthToken();
-          dispatchRemoveCurrentUser();
-          logout();
+          logoutHandler();
         });
     }
   }, [
     getAccessTokenSilently,
     isAuthenticated,
+    logoutHandler,
     authToken,
     dispatchSetAuthToken,
     dispatchSetCurrentUser,
-    dispatchRemoveAuthToken,
-    dispatchRemoveCurrentUser,
-    logout,
   ]);
+
+  useEffect(() => {
+    authHandler();
+  }, [authHandler]);
+
   return (
     <Box>
       <Header />

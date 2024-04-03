@@ -11,6 +11,7 @@ export const UpdateUserForm = memo(() => {
   const token = useSelectorAuthToken();
   const currentUser = useSelectorCurrentUser();
   const targetUser = useSelectorTargetUser();
+
   return (
     <>
       <UserChangeInfoForm
