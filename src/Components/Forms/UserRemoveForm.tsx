@@ -5,7 +5,6 @@ import { useDispatchRemoveTargetUser } from "../../Hooks/target-user-hooks";
 import { AuthUser } from "../../Type/userTypes";
 import { useDispatchRemoveCurrentUser } from "../../Hooks/current-user-hooks";
 import { removeToken } from "../../Type/tokenActions";
-import { Typography } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatchRemoveAuthToken } from "../../Hooks/auth-token-hooks";
 import { useNavigate } from "react-router-dom";
@@ -56,14 +55,7 @@ export const UserRemoveForm = memo(
 
     return (
       <form onSubmit={removeUserHandler}>
-        <Typography variant="h6" gutterBottom color="steelblue">
-          Remove user profile
-        </Typography>
-        <Button
-          variant="contained"
-          type="submit"
-          sx={{ maxWidth: "25%", marginRight: 2 }}
-        >
+        <Button variant="contained" type="submit" sx={{ maxWidth: "100%" }}>
           Remove user
         </Button>
       </form>

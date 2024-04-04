@@ -75,7 +75,7 @@ export const UserChangePasswordForm = memo(({ id }: { id: number }) => {
         <Button
           variant="contained"
           type="submit"
-          sx={{ maxWidth: "25%", marginRight: 2 }}
+          sx={{ maxWidth: "100%", marginRight: 2 }}
         >
           Change password
         </Button>

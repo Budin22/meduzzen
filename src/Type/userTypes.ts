@@ -6,16 +6,6 @@ export interface RegistrationUser {
   user_lastname: string;
 }
 
-export interface RegistrationUserFailRes {
-  detail: [
-    {
-      loc: [string, number];
-      msg: string;
-      type: string;
-    },
-  ];
-}
-
 export interface LoginUser {
   user_email: string;
   user_password: string;
@@ -28,16 +18,6 @@ export interface LoginUserSuccessfulRes {
     access_token: string;
     token_type: string;
   };
-}
-
-export interface LoginUserFailRes {
-  detail: [
-    {
-      loc: [string, number];
-      msg: string;
-      type: string;
-    },
-  ];
 }
 
 export interface AuthUser {
@@ -80,12 +60,6 @@ export interface GetAllUserSuccessfulRes {
   };
 }
 
-export interface DeleteUserSuccessfulRes {
-  status_code: number;
-  detail: string;
-  result: string;
-}
-
 export interface UserInfo {
   user_firstname: string;
   user_lastname: string;
@@ -106,10 +80,4 @@ export interface UserSuccessfulRes {
   result: {
     user_id: number;
   };
-}
-
-export interface UserAvatarUpdateSuccessfulRes {
-  status_code: number;
-  detail: string;
-  result: string;
 }

@@ -66,7 +66,7 @@ export const UserChangeInfoForm = memo(
         <Typography variant="h6" gutterBottom color="steelblue">
           Change user info
         </Typography>
-        <Box display="flex" gap={3} marginTop={2}>
+        <Box display="flex" gap={3} marginBottom={2}>
           <FormControl sx={{ minWidth: "25%" }} variant="standard">
             <InputLabel>first name</InputLabel>
             <Input
@@ -75,7 +75,7 @@ export const UserChangeInfoForm = memo(
             />
           </FormControl>
         </Box>
-        <Box display="flex" gap={3} marginTop={2}>
+        <Box display="flex" gap={3} marginBottom={2}>
           <FormControl sx={{ minWidth: "25%" }} variant="standard">
             <InputLabel>last name</InputLabel>
             <Input
@@ -84,7 +84,7 @@ export const UserChangeInfoForm = memo(
             />
           </FormControl>
         </Box>
-        <Box display="flex" gap={3} marginTop={2}>
+        <Box display="flex" gap={3} marginBottom={2}>
           <FormControl sx={{ minWidth: "25%" }} variant="standard">
             <InputLabel>status</InputLabel>
             <Input
@@ -93,7 +93,7 @@ export const UserChangeInfoForm = memo(
             />
           </FormControl>
         </Box>
-        <Box display="flex" gap={3} marginTop={2}>
+        <Box display="flex" gap={3} marginBottom={2}>
           <FormControl sx={{ minWidth: "25%" }} variant="standard">
             <InputLabel>City</InputLabel>
             <Input
@@ -102,7 +102,7 @@ export const UserChangeInfoForm = memo(
             />
           </FormControl>
         </Box>
-        <Box display="flex" gap={3} marginTop={2}>
+        <Box display="flex" gap={3} marginBottom={2}>
           <FormControl sx={{ minWidth: "25%" }} variant="standard">
             <InputLabel>Phone</InputLabel>
             <Input
@@ -111,17 +111,13 @@ export const UserChangeInfoForm = memo(
             />
           </FormControl>
         </Box>
-        <Box display="flex" gap={3} marginTop={2}>
+        <Box display="flex" gap={3} marginBottom={2}>
           <FormControl sx={{ minWidth: "25%" }} variant="standard">
             <InputLabel>Links</InputLabel>
             <Input onChange={(e) => setLinks([])} placeholder="Links" />
           </FormControl>
         </Box>
-        <Button
-          variant="contained"
-          type="submit"
-          sx={{ maxWidth: "25%", marginRight: 2 }}
-        >
+        <Button variant="contained" type="submit" sx={{ maxWidth: "100%" }}>
           Change info
         </Button>
       </form>
