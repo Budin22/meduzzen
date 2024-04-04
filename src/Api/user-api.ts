@@ -7,10 +7,10 @@ import {
   RegistrationUser,
   UserInfo,
   UserRes,
-} from "../Type/userTypes";
+} from "../Type/user-types";
 import { axiosInstance } from "./axios-instance";
 import { generateUrlForUserWithId } from "../Util/generateUrlForUserWithId";
-import { SuccessfulRes } from "../Type/shareTypes";
+import { SuccessfulRes } from "../Type/share-types";
 
 export const createUser = async (
   user: RegistrationUser,

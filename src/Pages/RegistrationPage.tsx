@@ -13,7 +13,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { passwordMatcher } from "../Util/passwordMatcher";
 import { createUser } from "../Api/user-api";
-import { RegistrationUser } from "../Type/userTypes";
+import { RegistrationUser } from "../Type/user-types";
 import { useNavigate } from "react-router-dom";
 import { GenericUnauthorizedContent } from "../Components/Generic-Page/GenericUnauthorizedContent";
 import { GenericPage } from "../Components/Generic-Page/GenericPage";

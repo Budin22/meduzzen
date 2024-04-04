@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserListItem } from "../../Type/userTypes";
+import { UserListItem } from "../../Type/user-types";
 
 const namespace = "userList" as const;
 

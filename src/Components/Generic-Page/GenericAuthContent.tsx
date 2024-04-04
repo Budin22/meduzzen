@@ -11,7 +11,7 @@ import {
   getTokenFromLS,
   removeToken,
   setTokenToLS,
-} from "../../Type/tokenActions";
+} from "../../Type/token-actions";
 import { getUser } from "../../Api/user-api";
 import { GenericPageProps } from "./generic-page-props";
 import {

@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import { Header } from "../Header";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useSelectorCurrentUser } from "../../Hooks/current-user-hooks";
-import { getTokenFromLS } from "../../Type/tokenActions";
+import { getTokenFromLS } from "../../Type/token-actions";
 import { getUser } from "../../Api/user-api";
 import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/material";

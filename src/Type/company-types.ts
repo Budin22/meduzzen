@@ -1,4 +1,4 @@
-import { Pagination } from "./shareTypes";
+import { Pagination } from "./share-types";
 
 export interface GetAllCompanyRes {
   companies: CompanyItemBody[];

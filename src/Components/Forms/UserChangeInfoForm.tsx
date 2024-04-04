@@ -3,7 +3,7 @@ import { FormControl, Input, InputLabel, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { getUserById, updateUserInfo } from "../../Api/user-api";
-import { AuthUser } from "../../Type/userTypes";
+import { AuthUser } from "../../Type/user-types";
 import { useDispatchSetTargetUser } from "../../Hooks/target-user-hooks";
 import { useDispatchSetCurrentUser } from "../../Hooks/current-user-hooks";
 

@@ -2,7 +2,7 @@ import { RootState, useAppDispatch, useAppSelector } from "../Redux/store";
 import { useCallback, useMemo } from "react";
 import * as TargetCompany from "../Redux/Reducers/targetCompanyReducer";
 import { TargetCompanyInitialState } from "../Redux/Reducers/targetCompanyReducer";
-import { CompanyBodyRes } from "../Type/companyTypes";
+import { CompanyBodyRes } from "../Type/company-types";
 
 const selectorTargetCompany = (state: RootState): TargetCompanyInitialState =>
   state.targetCompany;

@@ -9,7 +9,7 @@ import { FormControl, Input, InputLabel, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { changeCompanyAvatar } from "../../Api/company-api";
-import { CompanyBodyRes } from "../../Type/companyTypes";
+import { CompanyBodyRes } from "../../Type/company-types";
 import { useDispatchSetTargetCompany } from "../../Hooks/target-company-hooks";
 
 export const CompanyChangeAvatar = memo(

@@ -1,4 +1,4 @@
-import { Pagination } from "./shareTypes";
+import { Pagination } from "./share-types";
 
 export interface RegistrationUser {
   user_password: string;

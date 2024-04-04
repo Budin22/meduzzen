@@ -5,9 +5,9 @@ import {
   CompanyBodyRes,
   GetAllCompanyRes,
   CompanyRes,
-} from "../Type/companyTypes";
+} from "../Type/company-types";
 import { generateUrlForCompanyWithId } from "../Util/generateUrlForCompanyWithId";
-import { SuccessfulRes } from "../Type/shareTypes";
+import { SuccessfulRes } from "../Type/share-types";
 
 export const getCompanyList = async (
   token: string,

@@ -10,7 +10,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { changeAvatar } from "../../Api/user-api";
 import { useDispatchSetTargetUser } from "../../Hooks/target-user-hooks";
-import { AuthUser } from "../../Type/userTypes";
+import { AuthUser } from "../../Type/user-types";
 import { useDispatchSetCurrentUser } from "../../Hooks/current-user-hooks";
 
 export const UserChangeAvatarForm = memo(

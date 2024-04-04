@@ -16,7 +16,7 @@ import {
   useDispatchRemoveCurrentUser,
   useSelectorCurrentUser,
 } from "../Hooks/current-user-hooks";
-import { removeToken } from "../Type/tokenActions";
+import { removeToken } from "../Type/token-actions";
 import { useDispatchRemoveAuthToken } from "../Hooks/auth-token-hooks";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
