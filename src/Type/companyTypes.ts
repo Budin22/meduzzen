@@ -1,14 +1,8 @@
-export interface GetAllCompanySuccessfulRes {
-  status_code: number;
-  detail: string;
-  result: {
-    companies: CompanyItemBody[];
-    pagination: {
-      current_page: number;
-      total_page: number;
-      total_results: number;
-    };
-  };
+import { Pagination } from "./shareTypes";
+
+export interface GetAllCompanyRes {
+  companies: CompanyItemBody[];
+  pagination: Pagination;
 }
 
 export interface CompanyItemBody {
@@ -27,13 +21,7 @@ export interface CompanyOwner {
   user_avatar: string;
 }
 
-export interface GetCompanySuccessfulRes {
-  status_code: number;
-  detail: string;
-  result: CompanySuccessfulRes;
-}
-
-export interface CompanySuccessfulRes {
+export interface CompanyBodyRes {
   company_id: number;
   company_name: string;
   company_title: string;
@@ -51,12 +39,8 @@ export interface AddNewCompanyBody {
   is_visible: boolean;
 }
 
-export interface CompanySuccessfulRes {
-  status_code: number;
-  detail: string;
-  result: {
-    company_id: number;
-  };
+export interface CompanyRes {
+  company_id: number;
 }
 
 export interface CompanyInfo {

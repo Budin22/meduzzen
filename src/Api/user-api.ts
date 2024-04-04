@@ -1,35 +1,32 @@
 import {
-  AuthUserSuccessfulRes,
+  AuthUser,
   ChangePassword,
-  GetAllUserSuccessfulRes,
+  GetAllUserRes,
   LoginUser,
-  LoginUserSuccessfulRes,
+  LoginUserRes,
   RegistrationUser,
   UserInfo,
-  UserSuccessfulRes,
+  UserRes,
 } from "../Type/userTypes";
 import { axiosInstance } from "./axios-instance";
 import { generateUrlForUserWithId } from "../Util/generateUrlForUserWithId";
-import {
-  AvatarUpdateSuccessfulRes,
-  DeleteSuccessfulRes,
-} from "../Type/shareTypes";
+import { SuccessfulRes } from "../Type/shareTypes";
 
 export const createUser = async (
   user: RegistrationUser,
-): Promise<UserSuccessfulRes> => {
+): Promise<SuccessfulRes<UserRes>> => {
   return axiosInstance.post("/user/", user).then((res) => res.data);
 };
 
 export const loginUser = async (
   user: LoginUser,
-): Promise<LoginUserSuccessfulRes> => {
+): Promise<SuccessfulRes<LoginUserRes>> => {
   return axiosInstance.post("/auth/login", user).then((res) => res.data);
 };
 
 export const getUser = async (
   token: string,
-): Promise<AuthUserSuccessfulRes> => {
+): Promise<SuccessfulRes<AuthUser>> => {
   return axiosInstance
     .get("/auth/me/", { headers: { Authorization: "Bearer " + token } })
     .then((res) => res.data);
@@ -43,13 +40,13 @@ export const getUserList = async (
   const url = "/users/?page=" + page + "&page_size=" + pageSize;
   return axiosInstance
     .get(url, { headers: { Authorization: "Bearer " + token } })
-    .then((res): Promise<GetAllUserSuccessfulRes> => res.data);
+    .then((res): Promise<SuccessfulRes<GetAllUserRes>> => res.data);
 };
 
 export const getUserById = async (
   token: string,
   id: number,
-): Promise<AuthUserSuccessfulRes> => {
+): Promise<SuccessfulRes<AuthUser>> => {
   const url = generateUrlForUserWithId(id);
   return axiosInstance
     .get(url, { headers: { Authorization: "Bearer " + token } })
@@ -59,7 +56,7 @@ export const getUserById = async (
 export const removeUserById = async (
   token: string,
   id: number,
-): Promise<DeleteSuccessfulRes> => {
+): Promise<SuccessfulRes<string>> => {
   const url = generateUrlForUserWithId(id);
   return axiosInstance
     .delete(url, { headers: { Authorization: "Bearer " + token } })
@@ -70,7 +67,7 @@ export const updateUserInfo = async (
   userInfo: UserInfo,
   token: string,
   id: number,
-): Promise<UserSuccessfulRes> => {
+): Promise<SuccessfulRes<UserRes>> => {
   const url = generateUrlForUserWithId(id) + "update_info/";
   return axiosInstance
     .put(url, userInfo, { headers: { Authorization: "Bearer " + token } })
@@ -81,7 +78,7 @@ export const changeUserPassword = async (
   newPassword: ChangePassword,
   token: string,
   id: number,
-): Promise<UserSuccessfulRes> => {
+): Promise<SuccessfulRes<UserRes>> => {
   const url = generateUrlForUserWithId(id) + "update_password/";
   return axiosInstance
     .put(url, newPassword, { headers: { Authorization: "Bearer " + token } })
@@ -92,7 +89,7 @@ export const changeAvatar = async (
   avatar: FormData,
   token: string,
   id: number,
-): Promise<AvatarUpdateSuccessfulRes> => {
+): Promise<SuccessfulRes<string>> => {
   const url = generateUrlForUserWithId(id) + "update_avatar/";
   return axiosInstance
     .put(url, avatar, {

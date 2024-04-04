@@ -3,7 +3,7 @@ import { FormControl, Input, InputLabel, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { getCompanyById, updateCompanyInfo } from "../../Api/company-api";
-import { CompanySuccessfulRes } from "../../Type/companyTypes";
+import { CompanyBodyRes } from "../../Type/companyTypes";
 import { useDispatchSetTargetCompany } from "../../Hooks/target-company-hooks";
 
 export const CompanyChangeInfo = memo(
@@ -11,7 +11,7 @@ export const CompanyChangeInfo = memo(
     targetCompany,
     token,
   }: {
-    targetCompany: CompanySuccessfulRes;
+    targetCompany: CompanyBodyRes;
     token: string;
   }) => {
     const {

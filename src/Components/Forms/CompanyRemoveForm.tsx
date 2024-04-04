@@ -1,7 +1,7 @@
 import React, { FormEvent, memo, useCallback } from "react";
 import Button from "@mui/material/Button";
 import { removeCompanyById } from "../../Api/company-api";
-import { CompanySuccessfulRes } from "../../Type/companyTypes";
+import { CompanyBodyRes } from "../../Type/companyTypes";
 import { useDispatchRemoveTargetCompany } from "../../Hooks/target-company-hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ export const CompanyRemoveForm = memo(
     targetCompany,
     token,
   }: {
-    targetCompany: CompanySuccessfulRes;
+    targetCompany: CompanyBodyRes;
     token: string;
   }) => {
     const dispatchRemoveTargetCompany = useDispatchRemoveTargetCompany();

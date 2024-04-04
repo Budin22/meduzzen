@@ -2,15 +2,12 @@ import { axiosInstance } from "./axios-instance";
 import {
   AddNewCompanyBody,
   CompanyInfo,
-  CompanySuccessfulRes,
-  GetAllCompanySuccessfulRes,
-  GetCompanySuccessfulRes,
+  CompanyBodyRes,
+  GetAllCompanyRes,
+  CompanyRes,
 } from "../Type/companyTypes";
 import { generateUrlForCompanyWithId } from "../Util/generateUrlForCompanyWithId";
-import {
-  AvatarUpdateSuccessfulRes,
-  DeleteSuccessfulRes,
-} from "../Type/shareTypes";
+import { SuccessfulRes } from "../Type/shareTypes";
 
 export const getCompanyList = async (
   token: string,
@@ -20,13 +17,13 @@ export const getCompanyList = async (
   const url = "/companies/?page=" + page + "&page_size=" + pageSize;
   return axiosInstance
     .get(url, { headers: { Authorization: "Bearer " + token } })
-    .then((res): Promise<GetAllCompanySuccessfulRes> => res.data);
+    .then((res): Promise<SuccessfulRes<GetAllCompanyRes>> => res.data);
 };
 
 export const getCompanyById = async (
   token: string,
   id: number,
-): Promise<GetCompanySuccessfulRes> => {
+): Promise<SuccessfulRes<CompanyBodyRes>> => {
   const url = generateUrlForCompanyWithId(id);
   return axiosInstance
     .get(url, { headers: { Authorization: "Bearer " + token } })
@@ -36,7 +33,7 @@ export const getCompanyById = async (
 export const removeCompanyById = async (
   token: string,
   id: number,
-): Promise<DeleteSuccessfulRes> => {
+): Promise<SuccessfulRes<string>> => {
   const url = generateUrlForCompanyWithId(id);
   return axiosInstance
     .delete(url, { headers: { Authorization: "Bearer " + token } })
@@ -46,7 +43,7 @@ export const removeCompanyById = async (
 export const addCompany = async (
   token: string,
   company: AddNewCompanyBody,
-): Promise<CompanySuccessfulRes> => {
+): Promise<SuccessfulRes<CompanyRes>> => {
   return axiosInstance
     .post("/company/", company, {
       headers: { Authorization: "Bearer " + token },
@@ -58,7 +55,7 @@ export const updateCompanyInfo = async (
   companyInfo: CompanyInfo,
   token: string,
   id: number,
-): Promise<CompanySuccessfulRes> => {
+): Promise<SuccessfulRes<CompanyRes>> => {
   const url = generateUrlForCompanyWithId(id) + "update_info/";
   return axiosInstance
     .put(url, companyInfo, { headers: { Authorization: "Bearer " + token } })
@@ -69,7 +66,7 @@ export const updateCompanyVisible = async (
   isVisible: boolean,
   token: string,
   id: number,
-): Promise<CompanySuccessfulRes> => {
+): Promise<SuccessfulRes<CompanyRes>> => {
   const url = generateUrlForCompanyWithId(id) + "update_visible/";
   return axiosInstance
     .put(url, isVisible, { headers: { Authorization: "Bearer " + token } })
@@ -80,7 +77,7 @@ export const changeCompanyAvatar = async (
   avatar: FormData,
   token: string,
   id: number,
-): Promise<AvatarUpdateSuccessfulRes> => {
+): Promise<SuccessfulRes<string>> => {
   const url = generateUrlForCompanyWithId(id) + "update_avatar/";
   return axiosInstance
     .put(url, avatar, {

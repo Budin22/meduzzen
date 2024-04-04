@@ -9,7 +9,7 @@ import { FormControl, Input, InputLabel, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { changeCompanyAvatar } from "../../Api/company-api";
-import { CompanySuccessfulRes } from "../../Type/companyTypes";
+import { CompanyBodyRes } from "../../Type/companyTypes";
 import { useDispatchSetTargetCompany } from "../../Hooks/target-company-hooks";
 
 export const CompanyChangeAvatar = memo(
@@ -17,7 +17,7 @@ export const CompanyChangeAvatar = memo(
     targetCompany,
     token,
   }: {
-    targetCompany: CompanySuccessfulRes;
+    targetCompany: CompanyBodyRes;
     token: string;
   }) => {
     const dispatchSetTargetCompany = useDispatchSetTargetCompany();
@@ -31,7 +31,7 @@ export const CompanyChangeAvatar = memo(
           formData.append("file", uploadedImage);
           changeCompanyAvatar(formData, token, targetCompany.company_id)
             .then((data) => {
-              const newCompany: CompanySuccessfulRes = JSON.parse(
+              const newCompany: CompanyBodyRes = JSON.parse(
                 JSON.stringify(targetCompany),
               );
               newCompany.company_avatar = data.result;
