@@ -24,7 +24,6 @@ export const UsersPage = memo(() => {
       getUserList(authToken, page, pageSize)
         .then((data) => {
           dispatchSetUserList(data.result);
-          console.log(data.result);
         })
         .catch((err) => console.log(err));
     }
@@ -56,7 +55,6 @@ export const UsersPage = memo(() => {
         <Typography variant="h1" gutterBottom color="steelblue">
           Hello from Users page
         </Typography>
-
         <List
           sx={{ width: "100%", maxWidth: 600, bgcolor: "background.paper" }}
         >

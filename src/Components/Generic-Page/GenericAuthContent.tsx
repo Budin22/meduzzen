@@ -37,14 +37,12 @@ export const GenericAuthContent = memo(({ children }: GenericPageProps) => {
 
   const authHandler = useCallback(() => {
     if (authToken) {
-      console.log("authToken");
       setTokenToLS(authToken);
       return;
     }
 
     const lsToken = getTokenFromLS();
     if (lsToken) {
-      console.log("lsToken");
       getUser(lsToken)
         .then((res) => {
           dispatchSetAuthToken({ authToken: lsToken });
@@ -58,7 +56,6 @@ export const GenericAuthContent = memo(({ children }: GenericPageProps) => {
     }
 
     if (isAuthenticated) {
-      console.log("isAuthenticated");
       getAccessTokenSilently()
         .then((token) => {
           getUser(token)

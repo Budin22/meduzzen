@@ -1,17 +1,19 @@
 import {
   AuthUserSuccessfulRes,
   ChangePassword,
-  DeleteUserSuccessfulRes,
   GetAllUserSuccessfulRes,
   LoginUser,
   LoginUserSuccessfulRes,
   RegistrationUser,
-  UserAvatarUpdateSuccessfulRes,
   UserInfo,
   UserSuccessfulRes,
 } from "../Type/userTypes";
 import { axiosInstance } from "./axios-instance";
 import { generateUrlForUserWithId } from "../Util/generateUrlForUserWithId";
+import {
+  AvatarUpdateSuccessfulRes,
+  DeleteSuccessfulRes,
+} from "../Type/shareTypes";
 
 export const createUser = async (
   user: RegistrationUser,
@@ -57,7 +59,7 @@ export const getUserById = async (
 export const removeUserById = async (
   token: string,
   id: number,
-): Promise<DeleteUserSuccessfulRes> => {
+): Promise<DeleteSuccessfulRes> => {
   const url = generateUrlForUserWithId(id);
   return axiosInstance
     .delete(url, { headers: { Authorization: "Bearer " + token } })
@@ -87,21 +89,17 @@ export const changeUserPassword = async (
 };
 
 export const changeAvatar = async (
-  avatar: File,
+  avatar: FormData,
   token: string,
   id: number,
-): Promise<UserAvatarUpdateSuccessfulRes> => {
+): Promise<AvatarUpdateSuccessfulRes> => {
   const url = generateUrlForUserWithId(id) + "update_avatar/";
   return axiosInstance
-    .put(
-      url,
-      { file: avatar },
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "multipart/form-data",
-        },
+    .put(url, avatar, {
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "multipart/form-data",
       },
-    )
+    })
     .then((res) => res.data);
 };
