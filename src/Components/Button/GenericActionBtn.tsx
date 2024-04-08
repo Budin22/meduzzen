@@ -49,7 +49,7 @@ export const GenericActionBtn = memo(
 
     return (
       <>
-        <Button onClick={handleOpen}>{name}</Button>;
+        <Button onClick={handleOpen}>{name}</Button>
         <Modal
           open={open}
           onClose={handleClose}

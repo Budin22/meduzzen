@@ -127,7 +127,7 @@ export const Header = memo(() => {
               aria-haspopup="true"
               color="inherit"
               LinkComponent={NavLink}
-              {...{ to: "/profile" }}
+              {...{ to: "/user/" + currentUser.user_id + "/" }}
             >
               <AccountCircle />
             </IconButton>

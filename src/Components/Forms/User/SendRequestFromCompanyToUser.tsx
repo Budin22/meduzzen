@@ -55,7 +55,7 @@ export const SendRequestFromCompanyToUser = memo(
             ))}
           </Select>
         </FormControl>
-        <Button onClick={sendRequestHandler}>Send to user</Button>;
+        <Button onClick={sendRequestHandler}>Send to user</Button>
       </Box>
     );
   },

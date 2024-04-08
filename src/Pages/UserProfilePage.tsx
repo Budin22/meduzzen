@@ -45,7 +45,6 @@ export const UserProfilePage = memo(() => {
       .catch((err) => console.log(err));
   }, [id, token, dispatchSetTargetUser, currentUser, isChangeable, targetUser]);
 
-  console.log(targetUser);
   return (
     <GenericPage>
       <GenericAuthContent>
@@ -91,7 +90,7 @@ export const UserProfilePage = memo(() => {
             </Card>
           )}
           {isChangeable && <UserActionWrapper />}
-          {id && (
+          {Number(id) !== currentUser?.user_id && (
             <SendRequestFromCompanyToUser
               token={token}
               targetUserId={Number(id)}

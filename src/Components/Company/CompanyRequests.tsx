@@ -4,7 +4,7 @@ import { getCompanyRequestsList } from "../../Api/company-data-api";
 import { CompanyMembersItem } from "../../Type/company-data-types";
 import { CompanyMemberItem } from "./CompanyMemberItem";
 import { GenericActionBtn } from "../Button/GenericActionBtn";
-import { acceptActionInvite, declineAction } from "../../Api/action-api";
+import { acceptActionRequest, declineAction } from "../../Api/action-api";
 
 export const CompanyRequests = memo(
   ({ companyId, token }: { companyId: number; token: string }) => {
@@ -33,7 +33,7 @@ export const CompanyRequests = memo(
                   actionId={mem.action_id}
                   token={token}
                   name="accept invite"
-                  asFun={acceptActionInvite}
+                  asFun={acceptActionRequest}
                 />
                 <GenericActionBtn
                   actionId={mem.action_id}

@@ -3,7 +3,7 @@ import { getUserInvitesList } from "../../Api/user-data-api";
 import { CompaniesItem } from "../../Type/user-data-types";
 import { UserCompanyItem } from "./UserCompanyItem";
 import { List } from "@mui/material";
-import { declineAction } from "../../Api/action-api";
+import { acceptActionInvite, declineAction } from "../../Api/action-api";
 import { GenericActionBtn } from "../Button/GenericActionBtn";
 
 export const UserInvites = memo(
@@ -29,7 +29,12 @@ export const UserInvites = memo(
           {companies.map((com) => (
             <>
               <UserCompanyItem key={com.company_id} company={com} />
-
+              <GenericActionBtn
+                actionId={com.action_id}
+                token={token}
+                name="accept invite"
+                asFun={acceptActionInvite}
+              />
               <GenericActionBtn
                 actionId={com.action_id}
                 token={token}
