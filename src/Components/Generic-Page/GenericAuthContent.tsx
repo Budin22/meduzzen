@@ -19,6 +19,7 @@ import {
   useDispatchSetAuthToken,
   useSelectorAuthToken,
 } from "../../Hooks/auth-token-hooks";
+import { tokenStore } from "../../Api/axios-instance-with-token";
 
 export const GenericAuthContent = memo(({ children }: GenericPageProps) => {
   const { getAccessTokenSilently, isAuthenticated, logout } = useAuth0();
@@ -31,6 +32,7 @@ export const GenericAuthContent = memo(({ children }: GenericPageProps) => {
   const logoutHandler = useCallback(() => {
     removeToken();
     dispatchRemoveAuthToken();
+    tokenStore.setToken("");
     dispatchRemoveCurrentUser();
     logout();
   }, [dispatchRemoveAuthToken, dispatchRemoveCurrentUser, logout]);
@@ -38,6 +40,7 @@ export const GenericAuthContent = memo(({ children }: GenericPageProps) => {
   const authHandler = useCallback(() => {
     if (authToken) {
       setTokenToLS(authToken);
+      tokenStore.setToken(authToken);
       return;
     }
 
@@ -46,6 +49,7 @@ export const GenericAuthContent = memo(({ children }: GenericPageProps) => {
       getUser(lsToken)
         .then((res) => {
           dispatchSetAuthToken({ authToken: lsToken });
+          tokenStore.setToken(authToken);
           dispatchSetCurrentUser(res.result);
         })
         .catch((err) => {
@@ -61,6 +65,7 @@ export const GenericAuthContent = memo(({ children }: GenericPageProps) => {
           getUser(token)
             .then((res) => {
               dispatchSetAuthToken({ authToken: token });
+              tokenStore.setToken(token);
               dispatchSetCurrentUser(res.result);
             })
             .catch((err) => {

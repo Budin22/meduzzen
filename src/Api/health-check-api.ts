@@ -1,8 +1,8 @@
 import { HealthCheck } from "../Hooks/queries/useHealthCheckQuery";
-import { axiosInstance } from "./axios-instance";
+import { axiosInstanceWithToken } from "./axios-instance-with-token";
 
 export const getHealthCheck = async (): Promise<HealthCheck> => {
-  return await axiosInstance
+  return await axiosInstanceWithToken
     .get("/")
     .then((res) => res.data)
     .catch((err) => {

@@ -3,12 +3,12 @@ import Button from "@mui/material/Button";
 import { createActionFromUser } from "../../../Api/action-api";
 
 export const SendRequestFromUserToCompany = memo(
-  ({ companyId, token }: { companyId: number; token: string }) => {
+  ({ companyId }: { companyId: number }) => {
     const sendRequestHandler = useCallback(() => {
-      createActionFromUser(token, companyId)
+      createActionFromUser(companyId)
         .then((data) => console.log(data.result))
         .catch((err) => console.log(err));
-    }, [token, companyId]);
+    }, [companyId]);
 
     return (
       <Button onClick={sendRequestHandler}>Send request to company</Button>

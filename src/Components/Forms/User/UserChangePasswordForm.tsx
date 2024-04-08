@@ -11,10 +11,8 @@ import Button from "@mui/material/Button";
 import { passwordValidation } from "../../../Util/passwordValidation";
 import { passwordMatcher } from "../../../Util/passwordMatcher";
 import { changeUserPassword } from "../../../Api/user-api";
-import { useSelectorAuthToken } from "../../../Hooks/auth-token-hooks";
 
 export const UserChangePasswordForm = memo(({ id }: { id: number }) => {
-  const token = useSelectorAuthToken();
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [isValidPassword, setIsValidPassword] = useState(true);
@@ -27,7 +25,6 @@ export const UserChangePasswordForm = memo(({ id }: { id: number }) => {
     if (isPassword && isMatch) {
       changeUserPassword(
         { user_password: password, user_password_repeat: repeatPassword },
-        token,
         id,
       )
         .then((data) => console.log(data))

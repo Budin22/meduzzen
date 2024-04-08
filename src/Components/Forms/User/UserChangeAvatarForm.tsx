@@ -17,11 +17,9 @@ export const UserChangeAvatarForm = memo(
   ({
     targetUser,
     currentUser,
-    token,
   }: {
     targetUser: AuthUser;
     currentUser: AuthUser;
-    token: string;
   }) => {
     const dispatchSetTargetUser = useDispatchSetTargetUser();
     const dispatchSetCurrentUser = useDispatchSetCurrentUser();
@@ -33,7 +31,7 @@ export const UserChangeAvatarForm = memo(
         const formData = new FormData();
         if (uploadedImage) {
           formData.append("file", uploadedImage);
-          changeAvatar(formData, token, targetUser.user_id)
+          changeAvatar(formData, targetUser.user_id)
             .then((data) => {
               const newUser: AuthUser = JSON.parse(JSON.stringify(targetUser));
               newUser.user_avatar = data.result;
@@ -46,7 +44,6 @@ export const UserChangeAvatarForm = memo(
       },
       [
         uploadedImage,
-        token,
         targetUser,
         currentUser,
         dispatchSetCurrentUser,

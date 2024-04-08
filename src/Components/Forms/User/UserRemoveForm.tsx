@@ -13,11 +13,9 @@ export const UserRemoveForm = memo(
   ({
     targetUser,
     currentUser,
-    token,
   }: {
     targetUser: AuthUser;
     currentUser: AuthUser;
-    token: string;
   }) => {
     const { logout } = useAuth0();
     const navigation = useNavigate();
@@ -28,7 +26,7 @@ export const UserRemoveForm = memo(
       (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        removeUserById(token, targetUser.user_id)
+        removeUserById(targetUser.user_id)
           .then((data) => {
             if (currentUser.user_id === targetUser.user_id) {
               dispatchRemoveCurrentUser();
@@ -42,7 +40,6 @@ export const UserRemoveForm = memo(
           .catch((err) => console.log(err));
       },
       [
-        token,
         currentUser,
         targetUser,
         dispatchRemoveTargetUser,

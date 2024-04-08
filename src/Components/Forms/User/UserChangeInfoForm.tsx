@@ -11,11 +11,9 @@ export const UserChangeInfoForm = memo(
   ({
     targetUser,
     currentUser,
-    token,
   }: {
     targetUser: AuthUser;
     currentUser: AuthUser;
-    token: string;
   }) => {
     const {
       user_id,
@@ -46,11 +44,10 @@ export const UserChangeInfoForm = memo(
           user_status: status,
           user_firstname: firstName,
         },
-        token,
         user_id,
       )
         .then((data) => {
-          getUserById(token, data.result.user_id)
+          getUserById(data.result.user_id)
             .then((data) => {
               if (currentUser.user_id === targetUser.user_id)
                 dispatchSetCurrentUser(data.result);

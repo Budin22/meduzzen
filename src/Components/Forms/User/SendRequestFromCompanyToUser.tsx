@@ -14,7 +14,7 @@ import {
 import Box from "@mui/material/Box";
 
 export const SendRequestFromCompanyToUser = memo(
-  ({ token, targetUserId }: { token: string; targetUserId: number }) => {
+  ({ targetUserId }: { targetUserId: number }) => {
     const [companies, setCompanies] = useState<CompaniesItem[]>([]);
     const [selectedCompany, setSelectedCompany] = useState("");
 
@@ -22,16 +22,16 @@ export const SendRequestFromCompanyToUser = memo(
 
     useEffect(() => {
       if (!currentUser) return;
-      getUserCompanyList(token, currentUser.user_id)
+      getUserCompanyList(currentUser.user_id)
         .then((data) => setCompanies(data.result.companies))
         .catch((err) => console.log(err));
-    }, [currentUser, token]);
+    }, [currentUser]);
 
     const sendRequestHandler = useCallback(() => {
-      createActionFromCompany(token, Number(selectedCompany), targetUserId)
+      createActionFromCompany(Number(selectedCompany), targetUserId)
         .then((data) => console.log(data.result))
         .catch((err) => console.log(err));
-    }, [token, selectedCompany, targetUserId]);
+    }, [selectedCompany, targetUserId]);
 
     const handleChange = (event: SelectChangeEvent) => {
       setSelectedCompany(event.target.value);

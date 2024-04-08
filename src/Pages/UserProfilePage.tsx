@@ -11,7 +11,6 @@ import { GenericAuthContent } from "../Components/Generic-Page/GenericAuthConten
 import { GenericPage } from "../Components/Generic-Page/GenericPage";
 import { useParams } from "react-router-dom";
 import { getUserById } from "../Api/user-api";
-import { useSelectorAuthToken } from "../Hooks/auth-token-hooks";
 import { UpdateUserForm } from "../Components/User/UpdateUserForm";
 import {
   useDispatchSetTargetUser,
@@ -25,7 +24,6 @@ import { SendRequestFromCompanyToUser } from "../Components/Forms/User/SendReque
 
 export const UserProfilePage = memo(() => {
   const [isChangeable, setIsChangeable] = useState(false);
-  const token = useSelectorAuthToken();
   const currentUser = useSelectorCurrentUser();
   const targetUser = useSelectorTargetUser();
   const dispatchSetTargetUser = useDispatchSetTargetUser();
@@ -38,12 +36,12 @@ export const UserProfilePage = memo(() => {
       setIsChangeable(true);
     if (targetUser && targetUser.user_id === selectedUserId) return;
 
-    getUserById(token, selectedUserId)
+    getUserById(selectedUserId)
       .then((data) => {
         dispatchSetTargetUser(data.result);
       })
       .catch((err) => console.log(err));
-  }, [id, token, dispatchSetTargetUser, currentUser, isChangeable, targetUser]);
+  }, [id, dispatchSetTargetUser, currentUser, isChangeable, targetUser]);
 
   return (
     <GenericPage>
@@ -82,7 +80,6 @@ export const UserProfilePage = memo(() => {
                     <UserRemoveForm
                       targetUser={targetUser}
                       currentUser={currentUser}
-                      token={token}
                     />
                   </>
                 )}
@@ -91,10 +88,7 @@ export const UserProfilePage = memo(() => {
           )}
           {isChangeable && <UserActionWrapper />}
           {Number(id) !== currentUser?.user_id && (
-            <SendRequestFromCompanyToUser
-              token={token}
-              targetUserId={Number(id)}
-            />
+            <SendRequestFromCompanyToUser targetUserId={Number(id)} />
           )}
         </Stack>
       </GenericAuthContent>

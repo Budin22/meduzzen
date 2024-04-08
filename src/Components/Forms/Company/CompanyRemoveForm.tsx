@@ -6,13 +6,7 @@ import { useDispatchRemoveTargetCompany } from "../../../Hooks/target-company-ho
 import { useNavigate } from "react-router-dom";
 
 export const CompanyRemoveForm = memo(
-  ({
-    targetCompany,
-    token,
-  }: {
-    targetCompany: CompanyBodyRes;
-    token: string;
-  }) => {
+  ({ targetCompany }: { targetCompany: CompanyBodyRes }) => {
     const dispatchRemoveTargetCompany = useDispatchRemoveTargetCompany();
     const navigation = useNavigate();
 
@@ -20,19 +14,14 @@ export const CompanyRemoveForm = memo(
       (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        removeCompanyById(token, targetCompany.company_id)
+        removeCompanyById(targetCompany.company_id)
           .then((data) => {
             dispatchRemoveTargetCompany();
             navigation("/companies/");
           })
           .catch((err) => console.log(err));
       },
-      [
-        token,
-        dispatchRemoveTargetCompany,
-        navigation,
-        targetCompany.company_id,
-      ],
+      [dispatchRemoveTargetCompany, navigation, targetCompany.company_id],
     );
 
     return (

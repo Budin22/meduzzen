@@ -7,13 +7,7 @@ import { CompanyBodyRes } from "../../../Type/company-types";
 import { useDispatchSetTargetCompany } from "../../../Hooks/target-company-hooks";
 
 export const CompanyChangeInfo = memo(
-  ({
-    targetCompany,
-    token,
-  }: {
-    targetCompany: CompanyBodyRes;
-    token: string;
-  }) => {
+  ({ targetCompany }: { targetCompany: CompanyBodyRes }) => {
     const {
       company_name,
       company_title,
@@ -42,11 +36,10 @@ export const CompanyChangeInfo = memo(
           company_phone: phone,
           company_links: links,
         },
-        token,
         company_id,
       )
         .then((data) => {
-          getCompanyById(token, company_id)
+          getCompanyById(company_id)
             .then((data) => {
               dispatchSetTargetCompany(data.result);
             })

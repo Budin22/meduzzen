@@ -1,5 +1,4 @@
 import { memo, useEffect, useState } from "react";
-import { useSelectorAuthToken } from "../../Hooks/auth-token-hooks";
 import {
   FormControl,
   InputLabel,
@@ -20,15 +19,14 @@ export const CompanyActionWrapper = memo(
     >();
 
     const currentUser = useSelectorCurrentUser();
-    const token = useSelectorAuthToken();
 
     useEffect(() => {
-      const action = getOptionListForCompany(companyId, token);
+      const action = getOptionListForCompany(companyId);
       setOptionsList(action);
       const acList: string[] = [];
       action.forEach((el, key) => acList.push(key));
       setActionList(acList);
-    }, [currentUser, token, companyId]);
+    }, [currentUser, companyId]);
 
     const handleChange = (event: SelectChangeEvent) => {
       setActionOption(event.target.value as string);

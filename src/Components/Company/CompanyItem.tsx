@@ -14,7 +14,7 @@ export const CompanyItem = memo(({ company }: { company: CompanyItemBody }) => {
   }, [navigation, company]);
 
   return (
-    <>
+    <div>
       <ListItem alignItems="flex-start">
         <CardMedia
           component="img"
@@ -35,6 +35,6 @@ export const CompanyItem = memo(({ company }: { company: CompanyItemBody }) => {
         <Button onClick={openUserProfileHandler}>Profile</Button>
       </ListItem>
       <Divider variant="inset" />
-    </>
+    </div>
   );
 });

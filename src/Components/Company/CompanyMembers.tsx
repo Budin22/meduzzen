@@ -10,52 +10,45 @@ import {
 } from "../../Api/action-api";
 import { GenericActionBtn } from "../Button/GenericActionBtn";
 
-export const CompanyMembers = memo(
-  ({ companyId, token }: { companyId: number; token: string }) => {
-    const [members, setMembers] = useState<CompanyMembersItem[]>([]);
+export const CompanyMembers = memo(({ companyId }: { companyId: number }) => {
+  const [members, setMembers] = useState<CompanyMembersItem[]>([]);
 
-    useEffect(() => {
-      getCompanyMemberList(token, companyId)
-        .then((data) => {
-          setMembers(data.result.users);
-        })
-        .catch((err) => console.log(err));
-    }, [companyId, token]);
+  useEffect(() => {
+    getCompanyMemberList(companyId)
+      .then((data) => {
+        setMembers(data.result.users);
+      })
+      .catch((err) => console.log(err));
+  }, [companyId]);
 
-    if (members.length === 0) return null;
+  if (members.length === 0) return null;
 
-    return (
-      <>
-        <List
-          sx={{ width: "100%", maxWidth: 600, bgcolor: "background.paper" }}
-        >
-          <div>Members</div>
-          {members.map((mem) => (
-            <Stack key={mem.user_id}>
-              <CompanyMemberItem member={mem}>
-                <GenericActionBtn
-                  actionId={mem.action_id}
-                  token={token}
-                  name="remove member"
-                  asFun={leaveMemberFromCompany}
-                />
-              </CompanyMemberItem>
+  return (
+    <>
+      <List sx={{ width: "100%", maxWidth: 600, bgcolor: "background.paper" }}>
+        <div>Members</div>
+        {members.map((mem) => (
+          <Stack key={mem.user_id}>
+            <CompanyMemberItem member={mem}>
               <GenericActionBtn
                 actionId={mem.action_id}
-                token={token}
-                name="make admin"
-                asFun={addMemberToAdmin}
+                name="remove member"
+                asFun={leaveMemberFromCompany}
               />
-              <GenericActionBtn
-                actionId={mem.action_id}
-                token={token}
-                name="remove from admin"
-                asFun={removeMemberFromAdmin}
-              />
-            </Stack>
-          ))}
-        </List>
-      </>
-    );
-  },
-);
+            </CompanyMemberItem>
+            <GenericActionBtn
+              actionId={mem.action_id}
+              name="make admin"
+              asFun={addMemberToAdmin}
+            />
+            <GenericActionBtn
+              actionId={mem.action_id}
+              name="remove from admin"
+              asFun={removeMemberFromAdmin}
+            />
+          </Stack>
+        ))}
+      </List>
+    </>
+  );
+});

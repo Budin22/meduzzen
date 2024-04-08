@@ -13,13 +13,7 @@ import { CompanyBodyRes } from "../../../Type/company-types";
 import { useDispatchSetTargetCompany } from "../../../Hooks/target-company-hooks";
 
 export const CompanyChangeAvatar = memo(
-  ({
-    targetCompany,
-    token,
-  }: {
-    targetCompany: CompanyBodyRes;
-    token: string;
-  }) => {
+  ({ targetCompany }: { targetCompany: CompanyBodyRes }) => {
     const dispatchSetTargetCompany = useDispatchSetTargetCompany();
     const [uploadedImage, setUploadedImage] = useState<File>();
 
@@ -29,7 +23,7 @@ export const CompanyChangeAvatar = memo(
         const formData = new FormData();
         if (uploadedImage) {
           formData.append("file", uploadedImage);
-          changeCompanyAvatar(formData, token, targetCompany.company_id)
+          changeCompanyAvatar(formData, targetCompany.company_id)
             .then((data) => {
               const newCompany: CompanyBodyRes = JSON.parse(
                 JSON.stringify(targetCompany),
@@ -40,7 +34,7 @@ export const CompanyChangeAvatar = memo(
             .catch((err) => console.log(err));
         }
       },
-      [uploadedImage, token, dispatchSetTargetCompany, targetCompany],
+      [uploadedImage, dispatchSetTargetCompany, targetCompany],
     );
 
     const setUploadFileHandler = (e: ChangeEvent<HTMLInputElement>) => {

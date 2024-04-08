@@ -20,15 +20,12 @@ const style = {
 export const GenericActionBtn = memo(
   ({
     actionId,
-    token,
     asFun,
     name,
   }: {
     actionId: number;
-    token: string;
     name: string;
     asFun: (
-      token: string,
       actionId: number,
     ) => Promise<SuccessfulRes<Action>> | Promise<SuccessfulRes<string>>;
   }) => {
@@ -39,13 +36,13 @@ export const GenericActionBtn = memo(
     const handleClose = () => setOpen(false);
 
     const actionHandler = useCallback(() => {
-      asFun(token, actionId)
+      asFun(actionId)
         .then((data) => {
           console.log(data.result);
         })
         .catch((err) => console.log(err))
         .finally(() => handleClose());
-    }, [token, actionId, asFun]);
+    }, [actionId, asFun]);
 
     return (
       <>

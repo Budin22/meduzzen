@@ -1,6 +1,5 @@
 import { memo, useEffect, useState } from "react";
 import { useSelectorTargetUser } from "../../Hooks/target-user-hooks";
-import { useSelectorAuthToken } from "../../Hooks/auth-token-hooks";
 import {
   FormControl,
   InputLabel,
@@ -19,16 +18,15 @@ export const UserActionWrapper = memo(() => {
   >();
 
   const targetUser = useSelectorTargetUser();
-  const token = useSelectorAuthToken();
 
   useEffect(() => {
     if (!targetUser) return;
-    const action = getOptionListForUser(targetUser.user_id, token);
+    const action = getOptionListForUser(targetUser.user_id);
     setOptionsList(action);
     const acList: string[] = [];
     action.forEach((el, key) => acList.push(key));
     setActionList(acList);
-  }, [targetUser, token]);
+  }, [targetUser]);
 
   const handleChange = (event: SelectChangeEvent) => {
     setActionOption(event.target.value as string);
@@ -48,7 +46,9 @@ export const UserActionWrapper = memo(() => {
           onChange={handleChange}
         >
           {actionList.map((o) => (
-            <MenuItem value={o}>{o}</MenuItem>
+            <MenuItem key={o} value={o}>
+              {o}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
