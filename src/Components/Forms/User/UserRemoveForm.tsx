@@ -1,12 +1,12 @@
 import React, { FormEvent, memo, useCallback } from "react";
 import Button from "@mui/material/Button";
-import { removeUserById } from "../../Api/user-api";
-import { useDispatchRemoveTargetUser } from "../../Hooks/target-user-hooks";
-import { AuthUser } from "../../Type/user-types";
-import { useDispatchRemoveCurrentUser } from "../../Hooks/current-user-hooks";
-import { removeToken } from "../../Type/token-actions";
+import { removeUserById } from "../../../Api/user-api";
+import { useDispatchRemoveTargetUser } from "../../../Hooks/target-user-hooks";
+import { AuthUser } from "../../../Type/user-types";
+import { useDispatchRemoveCurrentUser } from "../../../Hooks/current-user-hooks";
+import { removeToken } from "../../../Type/token-actions";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatchRemoveAuthToken } from "../../Hooks/auth-token-hooks";
+import { useDispatchRemoveAuthToken } from "../../../Hooks/auth-token-hooks";
 import { useNavigate } from "react-router-dom";
 
 export const UserRemoveForm = memo(

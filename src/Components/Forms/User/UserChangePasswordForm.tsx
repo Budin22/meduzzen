@@ -8,10 +8,10 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { passwordValidation } from "../../Util/passwordValidation";
-import { passwordMatcher } from "../../Util/passwordMatcher";
-import { changeUserPassword } from "../../Api/user-api";
-import { useSelectorAuthToken } from "../../Hooks/auth-token-hooks";
+import { passwordValidation } from "../../../Util/passwordValidation";
+import { passwordMatcher } from "../../../Util/passwordMatcher";
+import { changeUserPassword } from "../../../Api/user-api";
+import { useSelectorAuthToken } from "../../../Hooks/auth-token-hooks";
 
 export const UserChangePasswordForm = memo(({ id }: { id: number }) => {
   const token = useSelectorAuthToken();

@@ -16,14 +16,16 @@ import { useSelectorAuthToken } from "../Hooks/auth-token-hooks";
 import { useSelectorCurrentUser } from "../Hooks/current-user-hooks";
 import { getCompanyById } from "../Api/company-api";
 import { BasicModal } from "../Components/Modals/BasicModal";
-import { CompanyChangeInfo } from "../Components/Forms/CompanyChangeInfo";
-import { CompanyRemoveForm } from "../Components/Forms/CompanyRemoveForm";
-import { CompanyCreateOne } from "../Components/Forms/CompanyCreateOne";
-import { CompanyChangeAvatar } from "../Components/Forms/CompanyChangeAvatar";
+import { CompanyChangeInfo } from "../Components/Forms/Company/CompanyChangeInfo";
+import { CompanyRemoveForm } from "../Components/Forms/Company/CompanyRemoveForm";
+import { CompanyCreateOne } from "../Components/Forms/Company/CompanyCreateOne";
+import { CompanyChangeAvatar } from "../Components/Forms/Company/CompanyChangeAvatar";
 import {
   useDispatchSetTargetCompany,
   useSelectorTargetCompany,
 } from "../Hooks/target-company-hooks";
+import { CompanyActionWrapper } from "../Components/Company/CompanyActionWrapper";
+import { SendRequestFromUserToCompany } from "../Components/Forms/User/SendRequestFromUserToCompany";
 
 export const CompanyProfilePage = memo(() => {
   const [isChangeable, setIsChangeable] = useState(false);
@@ -47,14 +49,9 @@ export const CompanyProfilePage = memo(() => {
       currentUser.is_superuser
     )
       setIsChangeable(true);
-  }, [
-    id,
-    token,
-    currentUser,
-    targetCompany,
-    isChangeable,
-    dispatchSetTargetCompany,
-  ]);
+  }, [id, token, currentUser, targetCompany, dispatchSetTargetCompany]);
+
+  if (!id) return null;
 
   return (
     <GenericPage>
@@ -118,6 +115,13 @@ export const CompanyProfilePage = memo(() => {
                   )}
                 </CardActions>
               </Card>
+              {isChangeable && <CompanyActionWrapper companyId={Number(id)} />}
+              {targetCompany.company_owner.user_id !== currentUser.user_id && (
+                <SendRequestFromUserToCompany
+                  companyId={Number(id)}
+                  token={token}
+                />
+              )}
             </ListItem>
             <Divider variant="inset" />
           </>

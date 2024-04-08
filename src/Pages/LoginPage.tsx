@@ -30,7 +30,7 @@ export const LoginPage = memo(() => {
 
   useEffect(() => {
     if (currentUser) {
-      navigation("/");
+      navigation("/users/");
     }
   }, [currentUser, navigation]);
 

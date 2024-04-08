@@ -13,7 +13,7 @@ import {
   NotificationList,
 } from "../Type/user-data-types";
 
-export const getCompanyList = async (
+export const getUserCompanyList = async (
   token: string,
   id: number,
 ): Promise<SuccessfulRes<CompaniesList>> => {
@@ -23,7 +23,7 @@ export const getCompanyList = async (
     .then((res) => res.data);
 };
 
-export const getCompanyInvitesList = async (
+export const getUserInvitesList = async (
   token: string,
   id: number,
 ): Promise<SuccessfulRes<CompaniesList>> => {
@@ -33,7 +33,7 @@ export const getCompanyInvitesList = async (
     .then((res) => res.data);
 };
 
-export const getCompanyRequestsList = async (
+export const getUserRequestsList = async (
   token: string,
   id: number,
 ): Promise<SuccessfulRes<CompaniesList>> => {

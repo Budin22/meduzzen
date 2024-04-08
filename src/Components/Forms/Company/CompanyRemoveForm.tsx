@@ -1,8 +1,8 @@
 import React, { FormEvent, memo, useCallback } from "react";
 import Button from "@mui/material/Button";
-import { removeCompanyById } from "../../Api/company-api";
-import { CompanyBodyRes } from "../../Type/company-types";
-import { useDispatchRemoveTargetCompany } from "../../Hooks/target-company-hooks";
+import { removeCompanyById } from "../../../Api/company-api";
+import { CompanyBodyRes } from "../../../Type/company-types";
+import { useDispatchRemoveTargetCompany } from "../../../Hooks/target-company-hooks";
 import { useNavigate } from "react-router-dom";
 
 export const CompanyRemoveForm = memo(
