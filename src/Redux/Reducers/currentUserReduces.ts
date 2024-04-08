@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AuthUser } from "../../Type/userTypes";
+import { AuthUser } from "../../Type/user-types";
 
 const namespace = "currentUser" as const;
 

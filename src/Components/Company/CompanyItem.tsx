@@ -4,7 +4,7 @@ import { memo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { CardMedia, Divider, ListItem, ListItemText } from "@mui/material";
 import Button from "@mui/material/Button";
-import { CompanyItemBody } from "../../Type/companyTypes";
+import { CompanyItemBody } from "../../Type/company-types";
 import { generateUrlForCompanyWithId } from "../../Util/generateUrlForCompanyWithId";
 
 export const CompanyItem = memo(({ company }: { company: CompanyItemBody }) => {
@@ -14,7 +14,7 @@ export const CompanyItem = memo(({ company }: { company: CompanyItemBody }) => {
   }, [navigation, company]);
 
   return (
-    <>
+    <div>
       <ListItem alignItems="flex-start">
         <CardMedia
           component="img"
@@ -35,6 +35,6 @@ export const CompanyItem = memo(({ company }: { company: CompanyItemBody }) => {
         <Button onClick={openUserProfileHandler}>Profile</Button>
       </ListItem>
       <Divider variant="inset" />
-    </>
+    </div>
   );
 });

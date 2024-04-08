@@ -1,18 +1,12 @@
 import React, { FormEvent, memo, useCallback } from "react";
 import Button from "@mui/material/Button";
-import { removeCompanyById } from "../../Api/company-api";
-import { CompanySuccessfulRes } from "../../Type/companyTypes";
-import { useDispatchRemoveTargetCompany } from "../../Hooks/target-company-hooks";
+import { removeCompanyById } from "../../../Api/company-api";
+import { CompanyBodyRes } from "../../../Type/company-types";
+import { useDispatchRemoveTargetCompany } from "../../../Hooks/target-company-hooks";
 import { useNavigate } from "react-router-dom";
 
 export const CompanyRemoveForm = memo(
-  ({
-    targetCompany,
-    token,
-  }: {
-    targetCompany: CompanySuccessfulRes;
-    token: string;
-  }) => {
+  ({ targetCompany }: { targetCompany: CompanyBodyRes }) => {
     const dispatchRemoveTargetCompany = useDispatchRemoveTargetCompany();
     const navigation = useNavigate();
 
@@ -20,19 +14,14 @@ export const CompanyRemoveForm = memo(
       (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        removeCompanyById(token, targetCompany.company_id)
+        removeCompanyById(targetCompany.company_id)
           .then((data) => {
             dispatchRemoveTargetCompany();
             navigation("/companies/");
           })
           .catch((err) => console.log(err));
       },
-      [
-        token,
-        dispatchRemoveTargetCompany,
-        navigation,
-        targetCompany.company_id,
-      ],
+      [dispatchRemoveTargetCompany, navigation, targetCompany.company_id],
     );
 
     return (

@@ -1,7 +1,7 @@
 import { RootState, useAppDispatch, useAppSelector } from "../Redux/store";
 import { useCallback, useMemo } from "react";
 import * as TargetUser from "../Redux/Reducers/targetUserReduces";
-import { AuthUser } from "../Type/userTypes";
+import { AuthUser } from "../Type/user-types";
 import { TargetUserInitialState } from "../Redux/Reducers/targetUserReduces";
 
 const selectorTargetUser = (state: RootState): TargetUserInitialState =>

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CompanyItemBody } from "../../Type/companyTypes";
+import { CompanyItemBody } from "../../Type/company-types";
 
 const namespace = "companyList" as const;
 

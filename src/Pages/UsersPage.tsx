@@ -6,7 +6,6 @@ import {
 } from "../Hooks/user-list-hooks";
 import { UserItem } from "../Components/User/UserItem";
 import { getUserList } from "../Api/user-api";
-import { useSelectorAuthToken } from "../Hooks/auth-token-hooks";
 import Typography from "@mui/material/Typography";
 import { List } from "@mui/material";
 import { MyPagination } from "../Components/MyPagination";
@@ -16,22 +15,21 @@ export const UsersPage = memo(() => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(4);
   const dispatchSetUserList = useDispatchSetUserList();
-  const authToken = useSelectorAuthToken();
   const { users, pagination } = useSelectorUserList();
 
   useEffect(() => {
     if (users.length === 0) {
-      getUserList(authToken, page, pageSize)
+      getUserList(page, pageSize)
         .then((data) => {
           dispatchSetUserList(data.result);
         })
         .catch((err) => console.log(err));
     }
-  }, [authToken, users, page, pageSize, dispatchSetUserList]);
+  }, [users, page, pageSize, dispatchSetUserList]);
 
   const changePageSizeHandler = (newPageSize: number) => {
     setPageSize(newPageSize);
-    getUserList(authToken, page, newPageSize)
+    getUserList(page, newPageSize)
       .then((data) => {
         dispatchSetUserList(data.result);
         console.log(data.result);
@@ -41,7 +39,7 @@ export const UsersPage = memo(() => {
 
   const changePageHandler = (newPage: number) => {
     setPage(newPage);
-    getUserList(authToken, newPage, pageSize)
+    getUserList(newPage, pageSize)
       .then((data) => {
         dispatchSetUserList(data.result);
         console.log(data.result);

@@ -2,20 +2,18 @@ import React, { FormEvent, memo, useState } from "react";
 import { FormControl, Input, InputLabel, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { getUserById, updateUserInfo } from "../../Api/user-api";
-import { AuthUser } from "../../Type/userTypes";
-import { useDispatchSetTargetUser } from "../../Hooks/target-user-hooks";
-import { useDispatchSetCurrentUser } from "../../Hooks/current-user-hooks";
+import { getUserById, updateUserInfo } from "../../../Api/user-api";
+import { AuthUser } from "../../../Type/user-types";
+import { useDispatchSetTargetUser } from "../../../Hooks/target-user-hooks";
+import { useDispatchSetCurrentUser } from "../../../Hooks/current-user-hooks";
 
 export const UserChangeInfoForm = memo(
   ({
     targetUser,
     currentUser,
-    token,
   }: {
     targetUser: AuthUser;
     currentUser: AuthUser;
-    token: string;
   }) => {
     const {
       user_id,
@@ -46,11 +44,10 @@ export const UserChangeInfoForm = memo(
           user_status: status,
           user_firstname: firstName,
         },
-        token,
         user_id,
       )
         .then((data) => {
-          getUserById(token, data.result.user_id)
+          getUserById(data.result.user_id)
             .then((data) => {
               if (currentUser.user_id === targetUser.user_id)
                 dispatchSetCurrentUser(data.result);

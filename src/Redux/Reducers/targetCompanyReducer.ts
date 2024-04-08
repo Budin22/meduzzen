@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CompanySuccessfulRes } from "../../Type/companyTypes";
+import { CompanyBodyRes } from "../../Type/company-types";
 
 const namespace = "targetCompany" as const;
 
 export interface TargetCompanyInitialState {
-  targetCompany: CompanySuccessfulRes[];
+  targetCompany: CompanyBodyRes[];
 }
 
 export const targetCompanyInitialState: TargetCompanyInitialState = {
@@ -18,7 +18,7 @@ export const {
   name: namespace,
   initialState: targetCompanyInitialState,
   reducers: {
-    setTargetCompany(state, action: PayloadAction<CompanySuccessfulRes>) {
+    setTargetCompany(state, action: PayloadAction<CompanyBodyRes>) {
       state.targetCompany[0] = action.payload;
     },
     removeTargetCompany(state) {

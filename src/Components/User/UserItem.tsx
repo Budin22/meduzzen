@@ -1,7 +1,7 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
 import { memo, useCallback } from "react";
-import { UserListItem } from "../../Type/userTypes";
+import { UserListItem } from "../../Type/user-types";
 import { useNavigate } from "react-router-dom";
 import { generateUrlForUserWithId } from "../../Util/generateUrlForUserWithId";
 import {

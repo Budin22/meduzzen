@@ -8,19 +8,21 @@ import React, {
 import { FormControl, Input, InputLabel, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { changeCompanyAvatar } from "../../Api/company-api";
-import { CompanySuccessfulRes } from "../../Type/companyTypes";
-import { useDispatchSetTargetCompany } from "../../Hooks/target-company-hooks";
+import { changeAvatar } from "../../../Api/user-api";
+import { useDispatchSetTargetUser } from "../../../Hooks/target-user-hooks";
+import { AuthUser } from "../../../Type/user-types";
+import { useDispatchSetCurrentUser } from "../../../Hooks/current-user-hooks";
 
-export const CompanyChangeAvatar = memo(
+export const UserChangeAvatarForm = memo(
   ({
-    targetCompany,
-    token,
+    targetUser,
+    currentUser,
   }: {
-    targetCompany: CompanySuccessfulRes;
-    token: string;
+    targetUser: AuthUser;
+    currentUser: AuthUser;
   }) => {
-    const dispatchSetTargetCompany = useDispatchSetTargetCompany();
+    const dispatchSetTargetUser = useDispatchSetTargetUser();
+    const dispatchSetCurrentUser = useDispatchSetCurrentUser();
     const [uploadedImage, setUploadedImage] = useState<File>();
 
     const changeAvatarHandler = useCallback(
@@ -29,18 +31,24 @@ export const CompanyChangeAvatar = memo(
         const formData = new FormData();
         if (uploadedImage) {
           formData.append("file", uploadedImage);
-          changeCompanyAvatar(formData, token, targetCompany.company_id)
+          changeAvatar(formData, targetUser.user_id)
             .then((data) => {
-              const newCompany: CompanySuccessfulRes = JSON.parse(
-                JSON.stringify(targetCompany),
-              );
-              newCompany.company_avatar = data.result;
-              dispatchSetTargetCompany(newCompany);
+              const newUser: AuthUser = JSON.parse(JSON.stringify(targetUser));
+              newUser.user_avatar = data.result;
+              if (targetUser.user_id === currentUser.user_id)
+                dispatchSetCurrentUser(newUser);
+              dispatchSetTargetUser(newUser);
             })
             .catch((err) => console.log(err));
         }
       },
-      [uploadedImage, token, dispatchSetTargetCompany, targetCompany],
+      [
+        uploadedImage,
+        targetUser,
+        currentUser,
+        dispatchSetCurrentUser,
+        dispatchSetTargetUser,
+      ],
     );
 
     const setUploadFileHandler = (e: ChangeEvent<HTMLInputElement>) => {

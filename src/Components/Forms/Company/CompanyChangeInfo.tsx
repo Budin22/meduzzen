@@ -2,18 +2,12 @@ import React, { FormEvent, memo, useState } from "react";
 import { FormControl, Input, InputLabel, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { getCompanyById, updateCompanyInfo } from "../../Api/company-api";
-import { CompanySuccessfulRes } from "../../Type/companyTypes";
-import { useDispatchSetTargetCompany } from "../../Hooks/target-company-hooks";
+import { getCompanyById, updateCompanyInfo } from "../../../Api/company-api";
+import { CompanyBodyRes } from "../../../Type/company-types";
+import { useDispatchSetTargetCompany } from "../../../Hooks/target-company-hooks";
 
 export const CompanyChangeInfo = memo(
-  ({
-    targetCompany,
-    token,
-  }: {
-    targetCompany: CompanySuccessfulRes;
-    token: string;
-  }) => {
+  ({ targetCompany }: { targetCompany: CompanyBodyRes }) => {
     const {
       company_name,
       company_title,
@@ -42,11 +36,10 @@ export const CompanyChangeInfo = memo(
           company_phone: phone,
           company_links: links,
         },
-        token,
         company_id,
       )
         .then((data) => {
-          getCompanyById(token, company_id)
+          getCompanyById(company_id)
             .then((data) => {
               dispatchSetTargetCompany(data.result);
             })

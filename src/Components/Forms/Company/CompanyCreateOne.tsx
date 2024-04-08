@@ -2,14 +2,14 @@ import React, { FormEvent, memo, useState } from "react";
 import { FormControl, Input, InputLabel, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { addCompany } from "../../Api/company-api";
+import { addCompany } from "../../../Api/company-api";
 
-export const CompanyCreateOne = memo(({ token }: { token: string }) => {
+export const CompanyCreateOne = memo(() => {
   const [companyName, setCompanyName] = useState("");
 
   const createCompanyHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addCompany(token, {
+    addCompany({
       company_name: companyName,
       is_visible: true,
     })

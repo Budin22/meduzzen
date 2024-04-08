@@ -1,6 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
 import { GenericAuthContent } from "../Components/Generic-Page/GenericAuthContent";
-import { useSelectorAuthToken } from "../Hooks/auth-token-hooks";
 import Typography from "@mui/material/Typography";
 import { List } from "@mui/material";
 import { MyPagination } from "../Components/MyPagination";
@@ -16,23 +15,22 @@ export const CompaniesPage = memo(() => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(4);
   const dispatchSetCompanyList = useDispatchSetCompanyList();
-  const authToken = useSelectorAuthToken();
   const { companies, pagination } = useSelectorCompanyList();
 
   useEffect(() => {
     if (companies.length === 0) {
-      getCompanyList(authToken, page, pageSize)
+      getCompanyList(page, pageSize)
         .then((data) => {
           dispatchSetCompanyList(data.result);
           console.log(data.result);
         })
         .catch((err) => console.log(err));
     }
-  }, [authToken, companies, page, pageSize, dispatchSetCompanyList]);
+  }, [companies, page, pageSize, dispatchSetCompanyList]);
 
   const changePageSizeHandler = (newPageSize: number) => {
     setPageSize(newPageSize);
-    getCompanyList(authToken, page, newPageSize)
+    getCompanyList(page, newPageSize)
       .then((data) => {
         dispatchSetCompanyList(data.result);
         console.log(data.result);
@@ -42,7 +40,7 @@ export const CompaniesPage = memo(() => {
 
   const changePageHandler = (newPage: number) => {
     setPage(newPage);
-    getCompanyList(authToken, newPage, pageSize)
+    getCompanyList(newPage, pageSize)
       .then((data) => {
         dispatchSetCompanyList(data.result);
         console.log(data.result);

@@ -4,13 +4,13 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Stack,
   Typography,
 } from "@mui/material";
 import { GenericAuthContent } from "../Components/Generic-Page/GenericAuthContent";
 import { GenericPage } from "../Components/Generic-Page/GenericPage";
 import { useParams } from "react-router-dom";
 import { getUserById } from "../Api/user-api";
-import { useSelectorAuthToken } from "../Hooks/auth-token-hooks";
 import { UpdateUserForm } from "../Components/User/UpdateUserForm";
 import {
   useDispatchSetTargetUser,
@@ -18,11 +18,12 @@ import {
 } from "../Hooks/target-user-hooks";
 import { useSelectorCurrentUser } from "../Hooks/current-user-hooks";
 import { BasicModal } from "../Components/Modals/BasicModal";
-import { UserRemoveForm } from "../Components/Forms/UserRemoveForm";
+import { UserRemoveForm } from "../Components/Forms/User/UserRemoveForm";
+import { UserActionWrapper } from "../Components/User/UserActionWrapper";
+import { SendRequestFromCompanyToUser } from "../Components/Forms/User/SendRequestFromCompanyToUser";
 
 export const UserProfilePage = memo(() => {
   const [isChangeable, setIsChangeable] = useState(false);
-  const token = useSelectorAuthToken();
   const currentUser = useSelectorCurrentUser();
   const targetUser = useSelectorTargetUser();
   const dispatchSetTargetUser = useDispatchSetTargetUser();
@@ -35,22 +36,21 @@ export const UserProfilePage = memo(() => {
       setIsChangeable(true);
     if (targetUser && targetUser.user_id === selectedUserId) return;
 
-    getUserById(token, selectedUserId)
+    getUserById(selectedUserId)
       .then((data) => {
         dispatchSetTargetUser(data.result);
       })
       .catch((err) => console.log(err));
-  }, [id, token, dispatchSetTargetUser, currentUser, isChangeable, targetUser]);
+  }, [id, dispatchSetTargetUser, currentUser, isChangeable, targetUser]);
 
-  console.log(targetUser);
   return (
     <GenericPage>
       <GenericAuthContent>
         <Typography variant="h1" gutterBottom color="steelblue">
           Hello from User Profile page
         </Typography>
-        {targetUser && (
-          <>
+        <Stack flexDirection="row">
+          {targetUser && (
             <Card sx={{ maxWidth: 600 }}>
               <CardMedia
                 sx={{ height: 140 }}
@@ -80,14 +80,17 @@ export const UserProfilePage = memo(() => {
                     <UserRemoveForm
                       targetUser={targetUser}
                       currentUser={currentUser}
-                      token={token}
                     />
                   </>
                 )}
               </CardActions>
             </Card>
-          </>
-        )}
+          )}
+          {isChangeable && <UserActionWrapper />}
+          {Number(id) !== currentUser?.user_id && (
+            <SendRequestFromCompanyToUser targetUserId={Number(id)} />
+          )}
+        </Stack>
       </GenericAuthContent>
     </GenericPage>
   );

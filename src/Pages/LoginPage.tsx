@@ -12,9 +12,9 @@ import Box from "@mui/material/Box";
 import { emailValidation } from "../Util/emailValidation";
 import { passwordValidation } from "../Util/passwordValidation";
 import { loginUser } from "../Api/user-api";
-import { LoginUser } from "../Type/userTypes";
+import { LoginUser } from "../Type/user-types";
 import { useNavigate } from "react-router-dom";
-import { setTokenToLS } from "../Type/tokenActions";
+import { setTokenToLS } from "../Type/token-actions";
 import { useSelectorCurrentUser } from "../Hooks/current-user-hooks";
 import { GenericUnauthorizedContent } from "../Components/Generic-Page/GenericUnauthorizedContent";
 import { GenericPage } from "../Components/Generic-Page/GenericPage";
@@ -30,7 +30,7 @@ export const LoginPage = memo(() => {
 
   useEffect(() => {
     if (currentUser) {
-      navigation("/");
+      navigation("/users/");
     }
   }, [currentUser, navigation]);
 

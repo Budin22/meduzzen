@@ -12,22 +12,22 @@ import {
 import { GenericAuthContent } from "../Components/Generic-Page/GenericAuthContent";
 import { GenericPage } from "../Components/Generic-Page/GenericPage";
 import { useParams } from "react-router-dom";
-import { useSelectorAuthToken } from "../Hooks/auth-token-hooks";
 import { useSelectorCurrentUser } from "../Hooks/current-user-hooks";
 import { getCompanyById } from "../Api/company-api";
 import { BasicModal } from "../Components/Modals/BasicModal";
-import { CompanyChangeInfo } from "../Components/Forms/CompanyChangeInfo";
-import { CompanyRemoveForm } from "../Components/Forms/CompanyRemoveForm";
-import { CompanyCreateOne } from "../Components/Forms/CompanyCreateOne";
-import { CompanyChangeAvatar } from "../Components/Forms/CompanyChangeAvatar";
+import { CompanyChangeInfo } from "../Components/Forms/Company/CompanyChangeInfo";
+import { CompanyRemoveForm } from "../Components/Forms/Company/CompanyRemoveForm";
+import { CompanyCreateOne } from "../Components/Forms/Company/CompanyCreateOne";
+import { CompanyChangeAvatar } from "../Components/Forms/Company/CompanyChangeAvatar";
 import {
   useDispatchSetTargetCompany,
   useSelectorTargetCompany,
 } from "../Hooks/target-company-hooks";
+import { CompanyActionWrapper } from "../Components/Company/CompanyActionWrapper";
+import { SendRequestFromUserToCompany } from "../Components/Forms/User/SendRequestFromUserToCompany";
 
 export const CompanyProfilePage = memo(() => {
   const [isChangeable, setIsChangeable] = useState(false);
-  const token = useSelectorAuthToken();
   const targetCompany = useSelectorTargetCompany();
   const currentUser = useSelectorCurrentUser();
   const dispatchSetTargetCompany = useDispatchSetTargetCompany();
@@ -35,7 +35,7 @@ export const CompanyProfilePage = memo(() => {
 
   useEffect(() => {
     if (!targetCompany) {
-      getCompanyById(token, Number(id))
+      getCompanyById(Number(id))
         .then((data) => {
           dispatchSetTargetCompany(data.result);
         })
@@ -47,14 +47,9 @@ export const CompanyProfilePage = memo(() => {
       currentUser.is_superuser
     )
       setIsChangeable(true);
-  }, [
-    id,
-    token,
-    currentUser,
-    targetCompany,
-    isChangeable,
-    dispatchSetTargetCompany,
-  ]);
+  }, [id, currentUser, targetCompany, dispatchSetTargetCompany]);
+
+  if (!id) return null;
 
   return (
     <GenericPage>
@@ -88,36 +83,31 @@ export const CompanyProfilePage = memo(() => {
                 <CardActions>
                   <BasicModal
                     name="Create company"
-                    children={<CompanyCreateOne token={token} />}
+                    children={<CompanyCreateOne />}
                   />
                   {isChangeable && (
                     <>
                       <BasicModal
                         name="Change info"
                         children={
-                          <CompanyChangeInfo
-                            targetCompany={targetCompany}
-                            token={token}
-                          />
+                          <CompanyChangeInfo targetCompany={targetCompany} />
                         }
                       />
                       <BasicModal
                         name="Change avatar"
                         children={
-                          <CompanyChangeAvatar
-                            targetCompany={targetCompany}
-                            token={token}
-                          />
+                          <CompanyChangeAvatar targetCompany={targetCompany} />
                         }
                       />
-                      <CompanyRemoveForm
-                        targetCompany={targetCompany}
-                        token={token}
-                      />
+                      <CompanyRemoveForm targetCompany={targetCompany} />
                     </>
                   )}
                 </CardActions>
               </Card>
+              {isChangeable && <CompanyActionWrapper companyId={Number(id)} />}
+              {targetCompany.company_owner.user_id !== currentUser.user_id && (
+                <SendRequestFromUserToCompany companyId={Number(id)} />
+              )}
             </ListItem>
             <Divider variant="inset" />
           </>

@@ -16,7 +16,7 @@ import {
   useDispatchRemoveCurrentUser,
   useSelectorCurrentUser,
 } from "../Hooks/current-user-hooks";
-import { removeToken } from "../Type/tokenActions";
+import { removeToken } from "../Type/token-actions";
 import { useDispatchRemoveAuthToken } from "../Hooks/auth-token-hooks";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
@@ -62,6 +62,7 @@ export const Header = memo(() => {
     dispatchRemoveCurrentUser();
     dispatchRemoveAuthToken();
   }, [logout, dispatchRemoveCurrentUser, dispatchRemoveAuthToken]);
+
   return (
     <Box sx={{ flexGrow: 1 }} position="relative">
       <AppBar position="fixed">
@@ -120,17 +121,19 @@ export const Header = memo(() => {
                 <ShoppingCartIcon />
               </StyledBadge>
             </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-haspopup="true"
-              color="inherit"
-              LinkComponent={NavLink}
-              {...{ to: "/profile" }}
-            >
-              <AccountCircle />
-            </IconButton>
+            {currentUser && (
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                color="inherit"
+                LinkComponent={NavLink}
+                {...{ to: "/user/" + currentUser.user_id + "/" }}
+              >
+                <AccountCircle />
+              </IconButton>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

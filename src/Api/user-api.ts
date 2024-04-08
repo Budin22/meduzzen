@@ -1,103 +1,89 @@
 import {
-  AuthUserSuccessfulRes,
+  AuthUser,
   ChangePassword,
-  GetAllUserSuccessfulRes,
+  GetAllUserRes,
   LoginUser,
-  LoginUserSuccessfulRes,
+  LoginUserRes,
   RegistrationUser,
   UserInfo,
-  UserSuccessfulRes,
-} from "../Type/userTypes";
-import { axiosInstance } from "./axios-instance";
+  UserRes,
+} from "../Type/user-types";
+import { axiosInstanceWithToken } from "./axios-instance-with-token";
 import { generateUrlForUserWithId } from "../Util/generateUrlForUserWithId";
-import {
-  AvatarUpdateSuccessfulRes,
-  DeleteSuccessfulRes,
-} from "../Type/shareTypes";
+import { SuccessfulRes } from "../Type/share-types";
 
 export const createUser = async (
   user: RegistrationUser,
-): Promise<UserSuccessfulRes> => {
-  return axiosInstance.post("/user/", user).then((res) => res.data);
+): Promise<SuccessfulRes<UserRes>> => {
+  return axiosInstanceWithToken.post("/user/", user).then((res) => res.data);
 };
 
 export const loginUser = async (
   user: LoginUser,
-): Promise<LoginUserSuccessfulRes> => {
-  return axiosInstance.post("/auth/login", user).then((res) => res.data);
+): Promise<SuccessfulRes<LoginUserRes>> => {
+  return axiosInstanceWithToken
+    .post("/auth/login", user)
+    .then((res) => res.data);
 };
 
 export const getUser = async (
   token: string,
-): Promise<AuthUserSuccessfulRes> => {
-  return axiosInstance
+): Promise<SuccessfulRes<AuthUser>> => {
+  return axiosInstanceWithToken
     .get("/auth/me/", { headers: { Authorization: "Bearer " + token } })
     .then((res) => res.data);
 };
 
-export const getUserList = async (
-  token: string,
-  page: number,
-  pageSize: number,
-) => {
-  const url = "/users/?page=" + page + "&page_size=" + pageSize;
-  return axiosInstance
-    .get(url, { headers: { Authorization: "Bearer " + token } })
-    .then((res): Promise<GetAllUserSuccessfulRes> => res.data);
+export const getUserList = async (page: number, page_size: number) => {
+  const url = "/users/";
+  return axiosInstanceWithToken
+    .get(url, {
+      params: {
+        page,
+        page_size,
+      },
+    })
+    .then((res): Promise<SuccessfulRes<GetAllUserRes>> => res.data);
 };
 
 export const getUserById = async (
-  token: string,
   id: number,
-): Promise<AuthUserSuccessfulRes> => {
+): Promise<SuccessfulRes<AuthUser>> => {
   const url = generateUrlForUserWithId(id);
-  return axiosInstance
-    .get(url, { headers: { Authorization: "Bearer " + token } })
-    .then((res) => res.data);
+  return axiosInstanceWithToken.get(url).then((res) => res.data);
 };
 
 export const removeUserById = async (
-  token: string,
   id: number,
-): Promise<DeleteSuccessfulRes> => {
+): Promise<SuccessfulRes<string>> => {
   const url = generateUrlForUserWithId(id);
-  return axiosInstance
-    .delete(url, { headers: { Authorization: "Bearer " + token } })
-    .then((res) => res.data);
+  return axiosInstanceWithToken.delete(url).then((res) => res.data);
 };
 
 export const updateUserInfo = async (
   userInfo: UserInfo,
-  token: string,
   id: number,
-): Promise<UserSuccessfulRes> => {
+): Promise<SuccessfulRes<UserRes>> => {
   const url = generateUrlForUserWithId(id) + "update_info/";
-  return axiosInstance
-    .put(url, userInfo, { headers: { Authorization: "Bearer " + token } })
-    .then((res) => res.data);
+  return axiosInstanceWithToken.put(url).then((res) => res.data);
 };
 
 export const changeUserPassword = async (
   newPassword: ChangePassword,
-  token: string,
   id: number,
-): Promise<UserSuccessfulRes> => {
+): Promise<SuccessfulRes<UserRes>> => {
   const url = generateUrlForUserWithId(id) + "update_password/";
-  return axiosInstance
-    .put(url, newPassword, { headers: { Authorization: "Bearer " + token } })
-    .then((res) => res.data);
+  return axiosInstanceWithToken.put(url, newPassword).then((res) => res.data);
 };
 
 export const changeAvatar = async (
   avatar: FormData,
-  token: string,
   id: number,
-): Promise<AvatarUpdateSuccessfulRes> => {
+): Promise<SuccessfulRes<string>> => {
   const url = generateUrlForUserWithId(id) + "update_avatar/";
-  return axiosInstance
+  return axiosInstanceWithToken
     .put(url, avatar, {
       headers: {
-        Authorization: "Bearer " + token,
         "Content-Type": "multipart/form-data",
       },
     })
