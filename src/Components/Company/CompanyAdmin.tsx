@@ -3,51 +3,38 @@ import { List, Stack } from "@mui/material";
 import { getCompanyMemberList } from "../../Api/company-data-api";
 import { CompanyMembersItem } from "../../Type/company-data-types";
 import { CompanyMemberItem } from "./CompanyMemberItem";
-import {
-  addMemberToAdmin,
-  leaveMemberFromCompany,
-  removeMemberFromAdmin,
-} from "../../Api/action-api";
 import { GenericActionBtn } from "../Button/GenericActionBtn";
-import { useSelectorCurrentUser } from "../../Hooks/current-user-hooks";
+import { removeMemberFromAdmin } from "../../Api/action-api";
 
-export const CompanyMembers = memo(({ companyId }: { companyId: number }) => {
+export const CompanyAdmin = memo(({ companyId }: { companyId: number }) => {
   const [members, setMembers] = useState<CompanyMembersItem[]>([]);
-  const { currentUser } = useSelectorCurrentUser();
 
   useEffect(() => {
     getCompanyMemberList(companyId)
       .then((data) => {
-        setMembers(data.result.users);
+        const adminList = data.result.users.filter(
+          (user) => user.action === "admin",
+        );
+        setMembers(adminList);
       })
       .catch((err) => console.log(err));
-  }, [companyId, currentUser]);
+  }, [companyId]);
 
   if (members.length === 0) return null;
 
   return (
     <>
       <List sx={{ width: "100%", maxWidth: 600, bgcolor: "background.paper" }}>
-        <div>Members</div>
+        <div>Admin</div>
         {members.map((mem) => (
           <Stack key={mem.user_id}>
             <CompanyMemberItem member={mem}>
               <GenericActionBtn
                 actionId={mem.action_id}
-                name="remove member"
-                asFun={leaveMemberFromCompany}
+                name="remove from admin"
+                asFun={removeMemberFromAdmin}
               />
             </CompanyMemberItem>
-            <GenericActionBtn
-              actionId={mem.action_id}
-              name="make admin"
-              asFun={addMemberToAdmin}
-            />
-            <GenericActionBtn
-              actionId={mem.action_id}
-              name="remove from admin"
-              asFun={removeMemberFromAdmin}
-            />
           </Stack>
         ))}
       </List>

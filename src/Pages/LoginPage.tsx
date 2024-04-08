@@ -26,7 +26,7 @@ export const LoginPage = memo(() => {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidPassword, setIsValidPassword] = useState(true);
   const { loginWithRedirect } = useAuth0();
-  const currentUser = useSelectorCurrentUser();
+  const { currentUser } = useSelectorCurrentUser();
 
   useEffect(() => {
     if (currentUser) {

@@ -7,7 +7,7 @@ import { Stack } from "@mui/material";
 import { UserChangeAvatarForm } from "../Forms/User/UserChangeAvatarForm";
 
 export const UpdateUserForm = memo(() => {
-  const currentUser = useSelectorCurrentUser();
+  const { currentUser } = useSelectorCurrentUser();
   const targetUser = useSelectorTargetUser();
 
   return (

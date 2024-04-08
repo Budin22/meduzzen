@@ -13,7 +13,7 @@ export const GenericUnauthorizedContent = memo(
   ({ children }: GenericPageProps) => {
     const navigation = useNavigate();
     const { isAuthenticated } = useAuth0();
-    const currentUser = useSelectorCurrentUser();
+    const { currentUser } = useSelectorCurrentUser();
 
     useEffect(() => {
       if (currentUser || isAuthenticated) {

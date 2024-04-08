@@ -5,14 +5,16 @@ const namespace = "currentUser" as const;
 
 export interface UserInitialState {
   currentUser: AuthUser[];
+  role: string;
 }
 
 export const userInitialState: UserInitialState = {
   currentUser: [],
+  role: "",
 };
 
 export const {
-  actions: { setCurrentUser, removeCurrentUser },
+  actions: { setCurrentUser, removeCurrentUser, setRole, removeRole },
   reducer,
 } = createSlice({
   name: namespace,
@@ -23,6 +25,12 @@ export const {
     },
     removeCurrentUser(state) {
       state.currentUser = [];
+    },
+    setRole(state, action: PayloadAction<string>) {
+      state.role = action.payload;
+    },
+    removeRole(state) {
+      state.role = "";
     },
   },
 });

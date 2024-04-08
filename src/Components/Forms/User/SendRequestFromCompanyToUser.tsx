@@ -18,7 +18,7 @@ export const SendRequestFromCompanyToUser = memo(
     const [companies, setCompanies] = useState<CompaniesItem[]>([]);
     const [selectedCompany, setSelectedCompany] = useState("");
 
-    const currentUser = useSelectorCurrentUser();
+    const { currentUser } = useSelectorCurrentUser();
 
     useEffect(() => {
       if (!currentUser) return;

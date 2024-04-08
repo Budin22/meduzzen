@@ -12,7 +12,10 @@ import {
 import { GenericAuthContent } from "../Components/Generic-Page/GenericAuthContent";
 import { GenericPage } from "../Components/Generic-Page/GenericPage";
 import { useParams } from "react-router-dom";
-import { useSelectorCurrentUser } from "../Hooks/current-user-hooks";
+import {
+  useDispatchSetRole,
+  useSelectorCurrentUser,
+} from "../Hooks/current-user-hooks";
 import { getCompanyById } from "../Api/company-api";
 import { BasicModal } from "../Components/Modals/BasicModal";
 import { CompanyChangeInfo } from "../Components/Forms/Company/CompanyChangeInfo";
@@ -25,12 +28,14 @@ import {
 } from "../Hooks/target-company-hooks";
 import { CompanyActionWrapper } from "../Components/Company/CompanyActionWrapper";
 import { SendRequestFromUserToCompany } from "../Components/Forms/User/SendRequestFromUserToCompany";
+import { getCompanyMemberList } from "../Api/company-data-api";
 
 export const CompanyProfilePage = memo(() => {
   const [isChangeable, setIsChangeable] = useState(false);
   const targetCompany = useSelectorTargetCompany();
-  const currentUser = useSelectorCurrentUser();
+  const { currentUser, role } = useSelectorCurrentUser();
   const dispatchSetTargetCompany = useDispatchSetTargetCompany();
+  const dispatchSetRole = useDispatchSetRole();
   const { id } = useParams();
 
   useEffect(() => {
@@ -38,18 +43,37 @@ export const CompanyProfilePage = memo(() => {
       getCompanyById(Number(id))
         .then((data) => {
           dispatchSetTargetCompany(data.result);
+          getCompanyMemberList(data.result.company_id)
+            .then((data) => {
+              data.result.users.forEach((mem) => {
+                if (mem.user_id === currentUser.user_id) {
+                  dispatchSetRole(mem.action);
+                }
+              });
+            })
+            .catch((err) => console.log(err));
         })
         .catch((err) => console.log(err));
       return;
     }
     if (
       targetCompany.company_owner.user_id === currentUser.user_id ||
-      currentUser.is_superuser
+      currentUser.is_superuser ||
+      role === "admin"
     )
       setIsChangeable(true);
-  }, [id, currentUser, targetCompany, dispatchSetTargetCompany]);
+  }, [
+    id,
+    currentUser,
+    targetCompany,
+    dispatchSetTargetCompany,
+    dispatchSetRole,
+    role,
+  ]);
 
   if (!id) return null;
+
+  console.log("role: " + role);
 
   return (
     <GenericPage>

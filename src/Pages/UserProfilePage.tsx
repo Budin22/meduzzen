@@ -24,7 +24,7 @@ import { SendRequestFromCompanyToUser } from "../Components/Forms/User/SendReque
 
 export const UserProfilePage = memo(() => {
   const [isChangeable, setIsChangeable] = useState(false);
-  const currentUser = useSelectorCurrentUser();
+  const { currentUser } = useSelectorCurrentUser();
   const targetUser = useSelectorTargetUser();
   const dispatchSetTargetUser = useDispatchSetTargetUser();
   const { id } = useParams();
