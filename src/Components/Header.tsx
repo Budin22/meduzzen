@@ -52,7 +52,7 @@ const pages = [
 ];
 
 export const Header = memo(() => {
-  const currentUser = useSelectorCurrentUser();
+  const { currentUser, role } = useSelectorCurrentUser();
   const dispatchRemoveCurrentUser = useDispatchRemoveCurrentUser();
   const dispatchRemoveAuthToken = useDispatchRemoveAuthToken();
   const { logout } = useAuth0();
@@ -62,6 +62,8 @@ export const Header = memo(() => {
     dispatchRemoveCurrentUser();
     dispatchRemoveAuthToken();
   }, [logout, dispatchRemoveCurrentUser, dispatchRemoveAuthToken]);
+
+  console.log("my role: " + role);
 
   return (
     <Box sx={{ flexGrow: 1 }} position="relative">
