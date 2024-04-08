@@ -3,7 +3,11 @@ import { List, Stack } from "@mui/material";
 import { getCompanyMemberList } from "../../Api/company-data-api";
 import { CompanyMembersItem } from "../../Type/company-data-types";
 import { CompanyMemberItem } from "./CompanyMemberItem";
-import { leaveMemberFromCompany } from "../../Api/action-api";
+import {
+  addMemberToAdmin,
+  leaveMemberFromCompany,
+  removeMemberFromAdmin,
+} from "../../Api/action-api";
 import { GenericActionBtn } from "../Button/GenericActionBtn";
 
 export const CompanyMembers = memo(
@@ -36,6 +40,18 @@ export const CompanyMembers = memo(
                   asFun={leaveMemberFromCompany}
                 />
               </CompanyMemberItem>
+              <GenericActionBtn
+                actionId={mem.action_id}
+                token={token}
+                name="make admin"
+                asFun={addMemberToAdmin}
+              />
+              <GenericActionBtn
+                actionId={mem.action_id}
+                token={token}
+                name="remove from admin"
+                asFun={removeMemberFromAdmin}
+              />
             </Stack>
           ))}
         </List>

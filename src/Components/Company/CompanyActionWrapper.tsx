@@ -47,7 +47,9 @@ export const CompanyActionWrapper = memo(
             onChange={handleChange}
           >
             {actionList.map((o) => (
-              <MenuItem value={o}>{o}</MenuItem>
+              <MenuItem key={o} value={o}>
+                {o}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>

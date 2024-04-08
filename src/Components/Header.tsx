@@ -62,6 +62,7 @@ export const Header = memo(() => {
     dispatchRemoveCurrentUser();
     dispatchRemoveAuthToken();
   }, [logout, dispatchRemoveCurrentUser, dispatchRemoveAuthToken]);
+
   return (
     <Box sx={{ flexGrow: 1 }} position="relative">
       <AppBar position="fixed">
@@ -120,17 +121,19 @@ export const Header = memo(() => {
                 <ShoppingCartIcon />
               </StyledBadge>
             </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-haspopup="true"
-              color="inherit"
-              LinkComponent={NavLink}
-              {...{ to: "/user/" + currentUser.user_id + "/" }}
-            >
-              <AccountCircle />
-            </IconButton>
+            {currentUser && (
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                color="inherit"
+                LinkComponent={NavLink}
+                {...{ to: "/user/" + currentUser.user_id + "/" }}
+              >
+                <AccountCircle />
+              </IconButton>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
