@@ -19,7 +19,6 @@ axiosInstanceWithToken.interceptors.request.use(
     const token = tokenStore.getToken();
     if (token) {
       config.headers.Authorization = token;
-      console.log(token);
     }
     return config;
   },

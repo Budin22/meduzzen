@@ -34,7 +34,7 @@ export const updateQuizInfo = async (
   quizId: number,
   quizInfo: QuizInfo,
 ): Promise<SuccessfulRes<Quiz>> => {
-  const url = generateUrlForQuizWithId(quizId) + "/update_info/";
+  const url = generateUrlForQuizWithId(quizId) + "update_info/";
   return axiosInstanceWithToken.put(url, quizInfo).then((res) => res.data);
 };
 
@@ -42,7 +42,7 @@ export const addQuestionForQuiz = async (
   quizId: number,
   question: NewQuizQuestion,
 ): Promise<SuccessfulRes<Question>> => {
-  const url = generateUrlForQuizWithId(quizId) + "/add_question/";
+  const url = generateUrlForQuizWithId(quizId) + "add_question/";
   return axiosInstanceWithToken.post(url, question).then((res) => res.data);
 };
 
@@ -51,6 +51,6 @@ export const takeQuiz = async (
   question: NewQuizQuestion,
 ): Promise<SuccessfulRes<QuizResult>> => {
   //@todo add request body type
-  const url = generateUrlForQuizWithId(quizId) + "/take_quiz/";
+  const url = generateUrlForQuizWithId(quizId) + "take_quiz/";
   return axiosInstanceWithToken.post(url, question).then((res) => res.data);
 };
