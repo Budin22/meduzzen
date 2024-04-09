@@ -29,6 +29,7 @@ import {
 import { CompanyActionWrapper } from "../Components/Company/CompanyActionWrapper";
 import { SendRequestFromUserToCompany } from "../Components/Forms/User/SendRequestFromUserToCompany";
 import { getCompanyMemberList } from "../Api/company-data-api";
+import { QuizCreator } from "../Components/Quiz/QuizCreator";
 
 export const CompanyProfilePage = memo(() => {
   const [isChangeable, setIsChangeable] = useState(false);
@@ -134,6 +135,9 @@ export const CompanyProfilePage = memo(() => {
               )}
             </ListItem>
             <Divider variant="inset" />
+            <BasicModal name="Create quiz">
+              <QuizCreator company_id={targetCompany.company_id} />
+            </BasicModal>
           </>
         )}
       </GenericAuthContent>
