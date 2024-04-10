@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
 import { Card, CardActions, CardContent, Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelectorCurrentUser } from "../Hooks/current-user-hooks";
 import { BasicModal } from "../Components/Modals/BasicModal";
 import { getQuizById, takeQuiz } from "../Api/quiz-api";
@@ -16,11 +16,10 @@ export const QuizPageBody = memo(() => {
   const [isChangeable, setIsChangeable] = useState(false);
   const [quiz, setQuiz] = useState<FullQuiz>();
   const [answer, setAnswer] = useState<Answer>();
+  const navigation = useNavigate();
 
   const { role } = useSelectorCurrentUser();
   const { id } = useParams();
-
-  console.log(answer);
 
   useEffect(() => {
     getQuizById(Number(id))
@@ -42,13 +41,22 @@ export const QuizPageBody = memo(() => {
 
   const sendQuizHandler = useCallback(() => {
     if (!quiz || !answer) return;
+    console.log(answer);
     takeQuiz(quiz.quiz_id, { answers: { ...answer } })
-      .then((data) => console.log(data.result))
+      .then((data) => {
+        alert(
+          "id: " +
+            data.result.result_id +
+            ") your result: " +
+            data.result.result_score,
+        );
+        navigation("/companies/");
+      })
       .catch((err) => console.log(err));
-  }, [answer, quiz]);
+  }, [answer, quiz, navigation]);
 
   return (
-    <>
+    <div>
       {quiz && (
         <div>
           <Typography variant="h1" gutterBottom color="steelblue">
@@ -100,6 +108,6 @@ export const QuizPageBody = memo(() => {
           </Box>
         </div>
       )}
-    </>
+    </div>
   );
 });
