@@ -46,3 +46,11 @@ export interface QuizResult {
   result_id: number;
   result_score: number;
 }
+
+export interface Answer {
+  [key: number]: string;
+}
+
+export interface QuizAnswer {
+  answers: Answer;
+}

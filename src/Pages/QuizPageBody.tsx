@@ -1,20 +1,26 @@
-import React, { memo, useEffect, useState } from "react";
-import { Box, Card, CardActions, CardContent, Typography } from "@mui/material";
+import React, { memo, useCallback, useEffect, useState } from "react";
+import { Card, CardActions, CardContent, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useSelectorCurrentUser } from "../Hooks/current-user-hooks";
 import { BasicModal } from "../Components/Modals/BasicModal";
-import { getQuizById } from "../Api/quiz-api";
-import { FullQuiz } from "../Type/quiz-types";
+import { getQuizById, takeQuiz } from "../Api/quiz-api";
+import { Answer, FullQuiz } from "../Type/quiz-types";
 import { RemoveQuizBtn } from "../Components/Button/RemoveQuizBtn";
 import { QuizQuestionItem } from "../Components/Quiz/QuizQuestionItem";
 import { QuizUpdateInfo } from "../Components/Quiz/QuizUpdateInfo";
 import { QuizAddQuestion } from "../Components/Quiz/QuizAddQuestion";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 export const QuizPageBody = memo(() => {
   const [isChangeable, setIsChangeable] = useState(false);
   const [quiz, setQuiz] = useState<FullQuiz>();
+  const [answer, setAnswer] = useState<Answer>();
+
   const { role } = useSelectorCurrentUser();
   const { id } = useParams();
+
+  console.log(answer);
 
   useEffect(() => {
     getQuizById(Number(id))
@@ -25,6 +31,21 @@ export const QuizPageBody = memo(() => {
   useEffect(() => {
     if (role === "admin" || role === "owner") setIsChangeable(true);
   }, [role]);
+
+  const addAnswerHandler = useCallback((id: number, answer: string) => {
+    setAnswer((state) => {
+      const newState = { ...state };
+      newState[id] = answer;
+      return newState;
+    });
+  }, []);
+
+  const sendQuizHandler = useCallback(() => {
+    if (!quiz || !answer) return;
+    takeQuiz(quiz.quiz_id, { answers: { ...answer } })
+      .then((data) => console.log(data.result))
+      .catch((err) => console.log(err));
+  }, [answer, quiz]);
 
   return (
     <>
@@ -66,8 +87,16 @@ export const QuizPageBody = memo(() => {
               <QuizQuestionItem
                 key={question.question_id}
                 question={question}
+                addAnswerHandler={addAnswerHandler}
               />
             ))}
+            <Button
+              variant="contained"
+              onClick={sendQuizHandler}
+              sx={{ maxWidth: "100%" }}
+            >
+              Submit quiz
+            </Button>
           </Box>
         </div>
       )}
