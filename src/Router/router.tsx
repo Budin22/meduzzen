@@ -7,6 +7,7 @@ import { UsersPage } from "../Pages/UsersPage";
 import { UserProfilePage } from "../Pages/UserProfilePage";
 import { RegistrationPage } from "../Pages/RegistrationPage";
 import { LoginPage } from "../Pages/LoginPage";
+import { QuizPage } from "../Pages/QuizPage";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
   {
     path: "/company/:id/",
     element: <CompanyProfilePage />,
+  },
+  {
+    path: "/quiz/:id/",
+    element: <QuizPage />,
   },
   {
     path: "/users",

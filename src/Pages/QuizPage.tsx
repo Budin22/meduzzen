@@ -1,13 +1,13 @@
 import React, { memo } from "react";
 import { GenericAuthContent } from "../Components/Generic-Page/GenericAuthContent";
 import { GenericPage } from "../Components/Generic-Page/GenericPage";
-import { UsersPageBody } from "./UsersPageBody";
+import { QuizPageBody } from "./QuizPageBody";
 
-export const UsersPage = memo(() => {
+export const QuizPage = memo(() => {
   return (
     <GenericPage>
       <GenericAuthContent>
-        <UsersPageBody />
+        <QuizPageBody />
       </GenericAuthContent>
     </GenericPage>
   );

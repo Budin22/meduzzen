@@ -18,6 +18,7 @@ import {
 } from "../Hooks/current-user-hooks";
 import { removeToken } from "../Type/token-actions";
 import { useDispatchRemoveAuthToken } from "../Hooks/auth-token-hooks";
+import { tokenStore } from "../Api/axios-instance-with-token";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   color: "inherit",
@@ -52,18 +53,17 @@ const pages = [
 ];
 
 export const Header = memo(() => {
-  const { currentUser, role } = useSelectorCurrentUser();
+  const { currentUser } = useSelectorCurrentUser();
   const dispatchRemoveCurrentUser = useDispatchRemoveCurrentUser();
   const dispatchRemoveAuthToken = useDispatchRemoveAuthToken();
   const { logout } = useAuth0();
   const logOutHandler = useCallback(() => {
     logout();
+    tokenStore.setToken("");
     removeToken();
     dispatchRemoveCurrentUser();
     dispatchRemoveAuthToken();
   }, [logout, dispatchRemoveCurrentUser, dispatchRemoveAuthToken]);
-
-  console.log("my role: " + role);
 
   return (
     <Box sx={{ flexGrow: 1 }} position="relative">

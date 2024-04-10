@@ -1,85 +1,68 @@
-import { memo, useCallback, useEffect } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { Header } from "../Header";
 import { Unauthorized } from "../Unauthorized";
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-  useDispatchRemoveCurrentUser,
-  useDispatchSetCurrentUser,
-} from "../../Hooks/current-user-hooks";
-import {
-  getTokenFromLS,
-  removeToken,
-  setTokenToLS,
-} from "../../Type/token-actions";
+import { useDispatchSetCurrentUser } from "../../Hooks/current-user-hooks";
+import { getTokenFromLS, setTokenToLS } from "../../Type/token-actions";
 import { getUser } from "../../Api/user-api";
-import { GenericPageProps } from "./generic-page-props";
 import {
-  useDispatchRemoveAuthToken,
   useDispatchSetAuthToken,
   useSelectorAuthToken,
 } from "../../Hooks/auth-token-hooks";
 import { tokenStore } from "../../Api/axios-instance-with-token";
 
-export const GenericAuthContent = memo(({ children }: GenericPageProps) => {
-  const { getAccessTokenSilently, isAuthenticated, logout } = useAuth0();
+export const GenericAuthContent = memo(({ children }: any) => {
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const [isLoading, setIsLoading] = useState(true);
   const authToken = useSelectorAuthToken();
   const dispatchSetAuthToken = useDispatchSetAuthToken();
-  const dispatchRemoveAuthToken = useDispatchRemoveAuthToken();
   const dispatchSetCurrentUser = useDispatchSetCurrentUser();
-  const dispatchRemoveCurrentUser = useDispatchRemoveCurrentUser();
-
-  const logoutHandler = useCallback(() => {
-    removeToken();
-    dispatchRemoveAuthToken();
-    tokenStore.setToken("");
-    dispatchRemoveCurrentUser();
-    logout();
-  }, [dispatchRemoveAuthToken, dispatchRemoveCurrentUser, logout]);
 
   const authHandler = useCallback(() => {
     if (authToken) {
       setTokenToLS(authToken);
       tokenStore.setToken(authToken);
+      setIsLoading(false);
       return;
     }
 
     const lsToken = getTokenFromLS();
     if (lsToken) {
-      getUser(lsToken)
+      tokenStore.setToken(lsToken);
+      getUser()
         .then((res) => {
           dispatchSetAuthToken({ authToken: lsToken });
-          tokenStore.setToken(authToken);
           dispatchSetCurrentUser(res.result);
         })
         .catch((err) => {
-          logoutHandler();
           console.log(err);
-        });
+        })
+        .then(() => setIsLoading(false));
       return;
     }
 
     if (isAuthenticated) {
       getAccessTokenSilently()
         .then((token) => {
-          getUser(token)
+          tokenStore.setToken(token);
+          getUser()
             .then((res) => {
               dispatchSetAuthToken({ authToken: token });
-              tokenStore.setToken(token);
               dispatchSetCurrentUser(res.result);
             })
             .catch((err) => {
-              logoutHandler();
-            });
+              console.log(err);
+            })
+            .then(() => setIsLoading(false));
         })
         .catch((err) => {
-          logoutHandler();
+          console.log(err);
         });
     }
+    setIsLoading(false);
   }, [
     getAccessTokenSilently,
     isAuthenticated,
-    logoutHandler,
     authToken,
     dispatchSetAuthToken,
     dispatchSetCurrentUser,
@@ -89,9 +72,12 @@ export const GenericAuthContent = memo(({ children }: GenericPageProps) => {
     authHandler();
   }, [authHandler]);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Box>
-      <Header />
       <Box sx={{ paddingTop: 8 }}>
         {!authToken ? <Unauthorized /> : children}
       </Box>

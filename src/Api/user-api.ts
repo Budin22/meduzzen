@@ -26,12 +26,8 @@ export const loginUser = async (
     .then((res) => res.data);
 };
 
-export const getUser = async (
-  token: string,
-): Promise<SuccessfulRes<AuthUser>> => {
-  return axiosInstanceWithToken
-    .get("/auth/me/", { headers: { Authorization: "Bearer " + token } })
-    .then((res) => res.data);
+export const getUser = async (): Promise<SuccessfulRes<AuthUser>> => {
+  return axiosInstanceWithToken.get("/auth/me/").then((res) => res.data);
 };
 
 export const getUserList = async (page: number, page_size: number) => {
