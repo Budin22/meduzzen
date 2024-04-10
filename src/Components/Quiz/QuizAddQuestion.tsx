@@ -9,14 +9,24 @@ export const QuizAddQuestion = memo(
   ({
     quiz_id,
     questionsHandler,
+    question,
+    updateQuestionHandler,
   }: {
     quiz_id?: number;
     questionsHandler?: (question: NewQuizQuestion) => void;
+    question?: NewQuizQuestion;
+    updateQuestionHandler?: (question: NewQuizQuestion) => void;
   }) => {
-    const [question_text, setQuestion_text] = useState("");
+    const [question_text, setQuestion_text] = useState(
+      question?.question_text ? question.question_text : "",
+    );
     const [answer, setAnswer] = useState("");
-    const [question_correct_answer, setQuestion_correct_answer] = useState(0);
-    const [question_answers, setQuestion_answers] = useState<string[]>([]);
+    const [question_correct_answer, setQuestion_correct_answer] = useState(
+      question?.question_correct_answer ? question.question_correct_answer : 0,
+    );
+    const [question_answers, setQuestion_answers] = useState<string[]>(
+      question?.question_answers ? question.question_answers : [],
+    );
 
     const addQuestionHandler = () => {
       if (
@@ -28,14 +38,18 @@ export const QuizAddQuestion = memo(
         return;
       }
 
-      const question = {
+      const newQuestion = {
         question_text,
         question_answers,
         question_correct_answer: question_correct_answer - 1,
       };
 
+      if (newQuestion && updateQuestionHandler) {
+        updateQuestionHandler(newQuestion);
+      }
+
       if (questionsHandler) {
-        questionsHandler(question);
+        questionsHandler(newQuestion);
         setAnswer("");
         setQuestion_text("");
         setQuestion_answers([]);
@@ -43,7 +57,7 @@ export const QuizAddQuestion = memo(
       }
 
       if (quiz_id) {
-        addQuestionForQuiz(quiz_id, question)
+        addQuestionForQuiz(quiz_id, newQuestion)
           .then((data) => console.log(data.result))
           .catch((err) => console.log(err));
       }
@@ -81,7 +95,7 @@ export const QuizAddQuestion = memo(
           </FormControl>
         </Box>
         <Button
-          onClick={addAnswerHandler}
+          onClick={(e) => addAnswerHandler}
           variant="contained"
           sx={{ maxWidth: "100%" }}
         >
