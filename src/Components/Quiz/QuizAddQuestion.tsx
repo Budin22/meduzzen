@@ -69,7 +69,7 @@ export const QuizAddQuestion = memo(
     }, [answer]);
 
     return (
-      <form>
+      <Box>
         <Typography variant="h6" gutterBottom color="steelblue">
           Add questions
         </Typography>
@@ -95,7 +95,7 @@ export const QuizAddQuestion = memo(
           </FormControl>
         </Box>
         <Button
-          onClick={(e) => addAnswerHandler}
+          onClick={addAnswerHandler}
           variant="contained"
           sx={{ maxWidth: "100%" }}
         >
@@ -127,7 +127,7 @@ export const QuizAddQuestion = memo(
         >
           Add question
         </Button>
-      </form>
+      </Box>
     );
   },
 );

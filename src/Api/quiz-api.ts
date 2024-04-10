@@ -6,6 +6,7 @@ import {
   Quiz,
   QuizInfo,
   QuizResult,
+  QuizAnswer,
 } from "../Type/quiz-types";
 import { generateUrlForQuizWithId } from "../Util/generateUrlForQuizWithId";
 
@@ -48,9 +49,8 @@ export const addQuestionForQuiz = async (
 
 export const takeQuiz = async (
   quizId: number,
-  question: NewQuizQuestion,
+  answers: QuizAnswer,
 ): Promise<SuccessfulRes<QuizResult>> => {
-  //@todo add request body type
   const url = generateUrlForQuizWithId(quizId) + "take_quiz/";
-  return axiosInstanceWithToken.post(url, question).then((res) => res.data);
+  return axiosInstanceWithToken.post(url, answers).then((res) => res.data);
 };
