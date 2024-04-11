@@ -85,6 +85,7 @@ export const ChartAnalytic = memo(({ companyId }: { companyId: number }) => {
           }
         });
 
+        console.log(dateData);
         setLabels(dateData);
         setDatasets([
           {
