@@ -10,9 +10,12 @@ import {
 } from "../../Api/action-api";
 import { GenericActionBtn } from "../Button/GenericActionBtn";
 import { useSelectorCurrentUser } from "../../Hooks/current-user-hooks";
+import { BasicModal } from "../Modals/BasicModal";
+import { UserAnalyticInCompany } from "../analitic/UserAnalyticInCompany";
 
 export const CompanyMembers = memo(({ companyId }: { companyId: number }) => {
   const [members, setMembers] = useState<CompanyMembersItem[]>([]);
+
   const { currentUser } = useSelectorCurrentUser();
 
   useEffect(() => {
@@ -32,6 +35,13 @@ export const CompanyMembers = memo(({ companyId }: { companyId: number }) => {
         {members.map((mem) => (
           <Stack key={mem.user_id}>
             <CompanyMemberItem member={mem}>
+              <BasicModal name="Show anlytic">
+                <UserAnalyticInCompany
+                  userId={mem.user_id}
+                  companyId={companyId}
+                  name="User analytic"
+                />
+              </BasicModal>
               <GenericActionBtn
                 actionId={mem.action_id}
                 name="remove member"

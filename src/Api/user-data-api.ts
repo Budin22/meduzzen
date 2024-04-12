@@ -43,7 +43,7 @@ export const getUserGlobalRating = async (
 
 export const getUserGlobalRatingAnalytic = async (
   id: number,
-): Promise<SuccessfulRes<AnalyticItem[]>> => {
+): Promise<SuccessfulRes<Rating<AnalyticItem[]>>> => {
   const url = generateUrlForUserWithId(id) + "global_rating_analytic/";
   return axiosInstanceWithToken.get(url).then((res) => res.data);
 };
