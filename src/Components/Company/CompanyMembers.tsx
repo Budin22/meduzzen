@@ -11,7 +11,7 @@ import {
 import { GenericActionBtn } from "../Button/GenericActionBtn";
 import { useSelectorCurrentUser } from "../../Hooks/current-user-hooks";
 import { BasicModal } from "../Modals/BasicModal";
-import { UserAnalyticInCompany } from "../analitic/UserAnalyticInCompany";
+import { UserAnalyticInCompany } from "../analytic/UserAnalyticInCompany";
 
 export const CompanyMembers = memo(({ companyId }: { companyId: number }) => {
   const [members, setMembers] = useState<CompanyMembersItem[]>([]);

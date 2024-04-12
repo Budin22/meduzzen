@@ -19,7 +19,6 @@ import { BasicModal } from "../Components/Modals/BasicModal";
 import { UserRemoveForm } from "../Components/Forms/User/UserRemoveForm";
 import { UserActionWrapper } from "../Components/User/UserActionWrapper";
 import { SendRequestFromCompanyToUser } from "../Components/Forms/User/SendRequestFromCompanyToUser";
-import { UserAnalyticInCompany } from "../Components/analitic/UserAnalyticInCompany";
 
 export const UserProfilePageBody = memo(() => {
   const [isChangeable, setIsChangeable] = useState(false);

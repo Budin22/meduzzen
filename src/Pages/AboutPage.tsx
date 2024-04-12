@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { Typography } from "@mui/material";
 import { GenericPage } from "../Components/Generic-Page/GenericPage";
-import { ChartAnalytic } from "../Components/analitic/ChartAnalytic";
+import { ChartAnalytic } from "../Components/analytic/ChartAnalytic";
 
 export const AboutPage = memo(() => {
   return (
