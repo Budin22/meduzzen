@@ -38,7 +38,7 @@ export const CompanyProfileBody = memo(() => {
   const { id } = useParams();
 
   useEffect(() => {
-    if (!targetCompany) {
+    if (!targetCompany || targetCompany.company_id !== Number(id)) {
       getCompanyById(Number(id))
         .then((data) => {
           dispatchSetTargetCompany(data.result);

@@ -4,6 +4,7 @@ import { CompanyInvites } from "../Components/Company/CompanyInvites";
 import { CompanyRequests } from "../Components/Company/CompanyRequests";
 import { CompanyAdmin } from "../Components/Company/CompanyAdmin";
 import { CompanyQuiz } from "../Components/Company/CompanyQuiz";
+import { ChartAnalytic } from "../Components/analytic/ChartAnalytic";
 
 export const getOptionListForCompany = (companyId: number) => {
   const options = new Map<string, JSX.Element>();
@@ -14,5 +15,6 @@ export const getOptionListForCompany = (companyId: number) => {
   options.set("blocked", <UserRequest userId={companyId} />);
   options.set("quizzes", <CompanyQuiz companyId={companyId} />);
   options.set("last_answers", <UserRequest userId={companyId} />);
+  options.set("analytics", <ChartAnalytic companyId={companyId} />);
   return options;
 };

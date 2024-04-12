@@ -20,7 +20,7 @@ export const QuizQuestionItem = memo(
         setSelectedAnswer(event.target.value);
         addAnswerHandler(question.question_id, event.target.value);
       },
-      [question, addAnswerHandler, selectedAnswer],
+      [question, addAnswerHandler],
     );
     if (!question) return null;
     return (
